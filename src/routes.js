@@ -3,7 +3,9 @@ import React from 'react';
 import ehAutenticado from './services/auth'
 import Login from './pages/Usuario/Login';
 import Arquivos from './pages/Arquivos';
-import Clientes from './pages/Clientes';
+import Clientes from './pages/Clientes/Lista';
+import CadastroClientes from './pages/Clientes/Cadastro';
+
 import CadastroProjetos from './pages/Projetos/Cadastro';
 import CadastroUsuario from './pages/Usuario/Cadastro';
 
@@ -30,6 +32,8 @@ const Routes = () => {
                 <Route exact path="/" component={Login} />
                 <PrivateRoute path="/arquivos" component={Arquivos} />
                 <PrivateRoute path="/clientes" component={Clientes} />
+                <PrivateRoute path="/cadastro-cliente" component={CadastroClientes} />
+
                 <Route path="/cadastro-usuario" component={CadastroUsuario} />
 
                 <PrivateRoute path="/cadastro-projeto" component={CadastroProjetos} />

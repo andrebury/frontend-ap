@@ -46,6 +46,7 @@ function App() {
               <NavDropdown.Item href="/lista-projetos">Lista Projetos</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="/arquivos">Arquivos</Nav.Link>
+            <Nav.Link href="/clientes">Clientes</Nav.Link>
           </Nav>
           {/* <Form inline onSubmit={handlesubmit}>
             <FormControl 
