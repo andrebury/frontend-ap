@@ -1,12 +1,10 @@
 import React,{useEffect, useState} from 'react';
-import {useHistory} from 'react-router-dom'
-
-import Cards from '../../components/Cards'
+import {useHistory, Link} from 'react-router-dom'
+import Calendar from 'react-calendar'
 import './styles.css'
 import {Table, Button,Modal,Form} from 'react-bootstrap';
 import api from '../../services/api'
-
-
+import 'react-calendar/dist/Calendar.css';
 
 function Inicio() {
   const history = useHistory();
@@ -20,14 +18,21 @@ function Inicio() {
     projeto: {titulo:''},
     desenvolvedor: {nome:''}
     }])
+
   const [observacoes, setObservacoes] = useState('')
   const [show, setShow] = useState(false);
   const [idSelecionado, setIdSelecionado] = useState('');
-
+  const [agenda, setAgenda] = useState(new Date())
+  const [alertas, setAlertas] = useState([])
+  
   
   function trataData(dataRaw){
     const dataF = new Date(dataRaw)
     return dataF.toLocaleDateString('pt-BR')
+  }
+  function calendarioOnClick(e){
+    console.log(e)
+    setAgenda(e.target)
   }
 
   function handleShow(e){
@@ -99,33 +104,6 @@ function Inicio() {
    
   }
 
-  const CardLinks = () => {
-    return (
-    <main>
-      <ul>
-        <Cards
-          titulo='Genesys'
-          texto='Site Customer Care da Genesys para acompanhamento de projetos e Docs'
-          destino='http://www.genesys.com/customer-care'
-        />
-        <Cards
-          titulo='Email Hitss'
-          texto='Acessar seu email Hitss'
-          destino='http://mail.globalhitss.com.br'
-        />
-        <Cards
-          titulo='GMUD Create'
-          texto='Abertura de GMUD na Embratel'
-          destino='http://10.98.132.70/wp-login.php'
-        />
-        <Cards
-          titulo='Google'
-          texto='Site do Google para pesquisas'
-          destino='http://www.google.com'
-        />
-      </ul>
-    </main>
-  )}
   
   useEffect(() => {
     async function carrageTarefas() {
@@ -149,20 +127,17 @@ function Inicio() {
 
   return (
     <>
-    
-    <div className="tabela-lista">
+    <div className="container-inicio">
+      
+    <div className="box lista">
     <p>Tarefas Pendentes do Usuário</p>
-    <Table striped bordered hover responsive="xl">
+    <Table striped bordered hover responsive="sm">
       <thead>
         <tr>
           <th>#</th>
           <th>Título</th>
           <th>Projeto</th>
-          <th>Desenvolvedor</th>
-          <th>Início</th>
-          <th>Status</th>
-          <th>Prioridade</th>
-          <th>Visualizar</th>
+          <th>Prazo</th>
           <th>Observações</th>
         </tr>
       </thead>
@@ -170,18 +145,15 @@ function Inicio() {
       {tarefas.map(tarefa =>(
         <tr key={tarefa._id} >
           <td>{tarefa.tarefa_id}</td>
-          <td>{tarefa.titulo}</td>
+          <td><Link to={`/cadastro-tarefa?idBusca=${tarefa._id}&idProjeto=${tarefa.projeto._id}`}>{tarefa.titulo}</Link></td>
           <td>{tarefa.projeto.titulo}</td>
-          <td>{tarefa.desenvolvedor.nome}</td>
-          <td>{trataData(tarefa.inicio)}</td>
-          <td>{tarefa.status}</td>
-          <td>{tarefa.prioridade}</td>
-          <td><Button 
+          <td>{tarefa.prazo}</td>
+          {/* <td><Button 
                 variant="light" 
                 size="sm" 
                 type="button" 
                 name={tarefa._id}
-                onClick={() => handleEntrar(tarefa._id, tarefa.projeto._id)}>Entrar</Button></td>
+                onClick={() => handleEntrar(tarefa._id, tarefa.projeto._id)}>Entrar</Button></td> */}
           <td><Button variant="light" size="sm" name={tarefa._id} onClick={handleShow}>Escrever</Button></td>
         </tr>
       ))}
@@ -208,6 +180,23 @@ function Inicio() {
           </Button>
         </Modal.Footer>
       </Modal>
+    </div>
+    
+    <div className="box alertas">
+      <p>Alertas</p>
+      <span>adicionar : </span><input></input><button>Adicionar</button>
+      
+
+    </div>
+    <div className="box agenda">
+      <p>Agenda</p>
+      
+      <Calendar 
+        className="Calendar"
+        onChange={e => calendarioOnClick(e)}
+        value={agenda}
+      />
+    </div>
     </div>
     </>
 

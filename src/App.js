@@ -35,7 +35,7 @@ function App() {
     <div className="App">
      
      <div className="container">
-     <Navbar bg="light" expand="lg">
+     <Navbar bg="light" expand="xl" fixed="top">
         <Navbar.Brand href="/home"><h3>Acompanhamento de Projetos</h3></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -47,6 +47,7 @@ function App() {
             </NavDropdown>
             <Nav.Link href="/arquivos">Arquivos</Nav.Link>
             <Nav.Link href="/clientes">Clientes</Nav.Link>
+            <Nav.Link href="/relatorio">Relatorios</Nav.Link>
           </Nav>
           {/* <Form inline onSubmit={handlesubmit}>
             <FormControl 

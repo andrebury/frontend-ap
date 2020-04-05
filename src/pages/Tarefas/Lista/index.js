@@ -55,8 +55,8 @@ function Tarefas() {
     console.log('idselect: ' + e.target.name)
     const ob = tarefas.filter(tarefa => tarefa._id === e.target.name)
     const data = new Date()
-    const dataStr = (data.getDate() <= 9 ? '0' + data.getDate() : data.getDate())  + '/' + ((data.getUTCMonth() + 1) <= 9 ? '0' + (data.getUTCMonth() + 1) : (data.getUTCMonth() + 1)) + '/' + data.getFullYear() + ' - ' + data.getHours() + ':' + data.getMinutes()
-    setObservacoes(ob[0].observacoes + '\n' + dataStr + ': ')
+    const dataStr = (data.getDate() <= 9 ? '0' + data.getDate() : data.getDate())  + '/' + ((data.getUTCMonth() + 1) <= 9 ? '0' + (data.getUTCMonth() + 1) : (data.getUTCMonth() + 1)) + '/' + data.getFullYear() + ' - ' + (data.getHours() < 10 ? '0' + data.getHours() : data.getHours()) + ':' + (data.getMinutes() < 10 ? '0' + data.getMinutes() : data.getMinutes())
+    setObservacoes((ob[0].observacoes.length > 0 ? ob[0].observacoes + '\n' : '') + dataStr + ': ')
    
   }
 

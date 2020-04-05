@@ -263,7 +263,6 @@ function Tarefas() {
             <Form.Label>Fim</Form.Label>
             <Form.Control 
                 type="date" 
-                required
                 value={fim}
                 onChange={e => setFim(e.target.value)}/>            
             </Form.Group>
