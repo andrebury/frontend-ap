@@ -132,7 +132,7 @@ function Inicio() {
             <div className="container-inicio">
                 <div className="lista-tarefas">
                     <p>Tarefas Pendentes do Usuário</p>
-                    <Table striped bordered hover responsive="sm">
+                    <table id="tarefas">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -174,7 +174,7 @@ function Inicio() {
                                 </tr>
                             ))}
                         </tbody>
-                    </Table>
+                    </table>
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
                             <Modal.Title>Observações</Modal.Title>
