@@ -68,11 +68,24 @@ function CadastroProjetos() {
             observacoes: observacoes,
         };
         console.log({ datasave: dataSave });
+
         if (form.checkValidity() !== false) {
             if (idBusca !== undefined) {
-                await api.post("/update/projeto", dataSave);
+                await api.post("/projeto/update", dataSave, {
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem(
+                            "Token"
+                        )}`,
+                    },
+                });
             } else {
-                await api.post("/cadastro/projeto", dataSave);
+                await api.post("/projeto/cadastro", dataSave, {
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem(
+                            "Token"
+                        )}`,
+                    },
+                });
             }
 
             history.push("/lista-projetos");
@@ -85,76 +98,112 @@ function CadastroProjetos() {
 
     useEffect(() => {
         async function loadInfo() {
-            await api.get("/clientes").then((response) => {
-                setClientes(response.data);
-                setClienteSelecionado(
-                    response.data[0] !== undefined ? response.data[0]._id : ""
-                );
-                setCliente(
-                    response.data[0] !== undefined ? response.data[0].nome : ""
-                );
-            });
+            await api
+                .get("/cliente/info", {
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem(
+                            "Token"
+                        )}`,
+                    },
+                })
+                .then((response) => {
+                    setClientes(response.data.clientes);
+                    setClienteSelecionado(
+                        response.data.clientes[0] !== undefined
+                            ? response.data.clientes[0]._id
+                            : ""
+                    );
+                    setCliente(
+                        response.data.clientes[0] !== undefined
+                            ? response.data.clientes[0].nome
+                            : ""
+                    );
+                });
 
-            await api.post("/usuario", {}).then((response) => {
-                const fapi = response.data.filter(
-                    (funcs) => funcs.funcao === "Funcional"
-                );
-                const papi = response.data.filter((pm) => pm.funcao === "PM");
+            await api
+                .post(
+                    "/userinfo/info",
+                    {},
+                    {
+                        headers: {
+                            Authorization: `Bearer ${sessionStorage.getItem(
+                                "Token"
+                            )}`,
+                        },
+                    }
+                )
+                .then((response) => {
+                    const fapi = response.data.usr.filter(
+                        (funcs) => funcs.funcao === "Funcional"
+                    );
+                    const papi = response.data.usr.filter(
+                        (pm) => pm.funcao === "PM"
+                    );
 
-                setFuncsAPI(fapi);
-                setPmsAPI(papi);
+                    setFuncsAPI(fapi);
+                    setPmsAPI(papi);
 
-                setPmSelecionado(papi[0] !== undefined ? papi[0]._id : "");
-                setPm(papi[0] !== undefined ? papi[0].nome : "");
+                    setPmSelecionado(papi[0] !== undefined ? papi[0]._id : "");
+                    setPm(papi[0] !== undefined ? papi[0].nome : "");
 
-                setFuncionalSelecionado(
-                    fapi[0] !== undefined ? fapi[0]._id : ""
-                );
-                setFuncional(fapi[0] !== undefined ? fapi[0].nome : "");
-            });
+                    setFuncionalSelecionado(
+                        fapi[0] !== undefined ? fapi[0]._id : ""
+                    );
+                    setFuncional(fapi[0] !== undefined ? fapi[0].nome : "");
+                });
 
             const idBusca = querystring.parse(window.location.search).idBusca;
             setIdBusca(idBusca);
 
             if (idBusca) {
-                await api.get(`/projeto/${idBusca}`).then((response) => {
-                    setTitulo(response.data.titulo);
-                    setStatus_projeto(response.data.status_projeto);
-                    setCliente(response.data.cliente);
-                    setFuncional(response.data.funcional);
-                    setHoras(response.data.horas);
-                    setPrioridade(response.data.prioridade);
-                    setInicio(response.data.inicio);
-                    setPrazo(response.data.prazo);
-                    setDescricao(response.data.descricao);
-                    setPm(response.data.pm);
-                    setObservacoes(response.data.observacoes);
-                    setProjeto_id(response.data.projeto_id);
-                    set_id(response.data._id);
+                await api
+                    .get(`/projeto/id/${idBusca}`, {
+                        headers: {
+                            Authorization: `Bearer ${sessionStorage.getItem(
+                                "Token"
+                            )}`,
+                        },
+                    })
+                    .then((response) => {
+                        setTitulo(response.data.projetos.titulo);
+                        setStatus_projeto(
+                            response.data.projetos.status_projeto
+                        );
+                        setCliente(response.data.projetos.cliente);
+                        setFuncional(response.data.projetos.funcional);
+                        setHoras(response.data.projetos.horas);
+                        setPrioridade(response.data.projetos.prioridade);
+                        setInicio(response.data.projetos.inicio);
+                        setPrazo(response.data.projetos.prazo);
+                        setDescricao(response.data.projetos.descricao);
+                        setPm(response.data.projetos.pm);
+                        setObservacoes(response.data.projetos.observacoes);
+                        setProjeto_id(response.data.projetos.projeto_id);
+                        set_id(response.data.projetos._id);
 
-                    setPmSelecionado(
-                        response.data.pm === null ||
-                            response.data.pm === undefined
-                            ? ""
-                            : response.data.pm._id
-                    );
-                    setFuncionalSelecionado(
-                        response.data.funcional === null ||
-                            response.data.funcional === undefined
-                            ? ""
-                            : response.data.funcional._id
-                    );
-                    setClienteSelecionado(
-                        response.data.cliente === null ||
-                            response.data.cliente === undefined
-                            ? ""
-                            : response.data.cliente._id
-                    );
+                        setPmSelecionado(
+                            response.data.projetos.pm === null ||
+                                response.data.projetos.pm === undefined
+                                ? ""
+                                : response.data.projetos.pm._id
+                        );
+                        setFuncionalSelecionado(
+                            response.data.projetos.funcional === null ||
+                                response.data.projetos.funcional === undefined
+                                ? ""
+                                : response.data.projetos.funcional._id
+                        );
+                        setClienteSelecionado(
+                            response.data.projetos.cliente === null ||
+                                response.data.projetos.cliente === undefined
+                                ? ""
+                                : response.data.projetos.cliente._id
+                        );
 
-                    console.log(response.data.pm);
-                    console.log(response.data.funcional);
-                    console.log(response.data.cliente);
-                });
+                        console.log(response.data.projetos.pm);
+                        console.log(response.data.projetos.funcional);
+                        console.log(response.data.projetos.cliente);
+                    });
             }
         }
         loadInfo();
@@ -174,9 +223,9 @@ function CadastroProjetos() {
 
     function Titulo() {
         if (projeto_id) {
-            return <p>Atualizar Projeto {titulo}</p>;
+            return <h1>Atualizar Projeto {titulo}</h1>;
         } else {
-            return <p>Cadastro Projetos </p>;
+            return <h1>Cadastro Projetos </h1>;
         }
     }
 

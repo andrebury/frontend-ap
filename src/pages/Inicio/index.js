@@ -84,7 +84,12 @@ function Inicio() {
             desenvolvedor: t[0].desenvolvedor,
         };
 
-        const response = await api.post("/update/tarefa", data);
+        const response = await api.post("/tarefa/update", data, {
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("Token")}`,
+            },
+        });
+
         console.log(response);
         console.log(data);
         setShow(false);
@@ -116,13 +121,23 @@ function Inicio() {
         async function carrageTarefas() {
             const sessionid = sessionStorage.getItem("sessionid");
 
-            const response = await api.post("/tarefas", {
-                desenvolvedor: sessionid,
-            });
+            const response = await api.post(
+                "/tarefa/info",
+                {
+                    desenvolvedor: sessionid,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem(
+                            "Token"
+                        )}`,
+                    },
+                }
+            );
 
-            setTarefas(response.data);
+            setTarefas(response.data.tarefas);
 
-            response.data.map((tarefa) => console.log(tarefa._id));
+            response.data.tarefas.map((tarefa) => console.log(tarefa._id));
         }
         carrageTarefas();
     }, []);
@@ -131,7 +146,7 @@ function Inicio() {
         <>
             <div className="container-inicio">
                 <div className="lista-tarefas">
-                    <p>Tarefas Pendentes do Usuário</p>
+                    <h1>Tarefas Pendentes do Usuário</h1>
                     <table id="tarefas">
                         <thead>
                             <tr>
@@ -148,28 +163,20 @@ function Inicio() {
                                     <td>{tarefa.tarefa_id}</td>
                                     <td>
                                         <Link
-                                            to={`/cadastro-tarefa?idBusca=${tarefa._id}&idProjeto=${tarefa.projeto._id}`}
+                                            to={`/cadastro-tarefa?idBusca=${tarefa._id}`}
                                         >
                                             {tarefa.titulo}
                                         </Link>
                                     </td>
                                     <td>{tarefa.projeto.titulo}</td>
                                     <td>{tarefa.prazo}</td>
-                                    {/* <td><Button 
-                variant="light" 
-                size="sm" 
-                type="button" 
-                name={tarefa._id}
-                onClick={() => handleEntrar(tarefa._id, tarefa.projeto._id)}>Entrar</Button></td> */}
                                     <td>
-                                        <Button
-                                            variant="light"
-                                            size="sm"
+                                        <Link
                                             name={tarefa._id}
                                             onClick={handleShow}
                                         >
                                             Escrever
-                                        </Button>
+                                        </Link>
                                     </td>
                                 </tr>
                             ))}
@@ -203,13 +210,13 @@ function Inicio() {
                 </div>
                 <div className="container-direita">
                     <div className="alertas">
-                        <p>Alertas</p>
+                        <h1>Alertas</h1>
                         <span>adicionar : </span>
                         <input></input>
                         <button>Adicionar</button>
                     </div>
                     <div className="calendario">
-                        <p>Agenda</p>
+                        <h1>Agenda</h1>
 
                         <Calendar
                             className="Calendar"
