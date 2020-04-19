@@ -1,78 +1,79 @@
-import React, {useState, useEffect} from 'react';
-import './styles.css'
-import api from '../../../services/api'
-import ehAutenticado from '../../../services/auth'
-import {Form, Button,Container,Row,Col} from 'react-bootstrap';
-import {useHistory} from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import "./styles.css";
+import api from "../../../services/api";
+import ehAutenticado from "../../../services/auth";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { useHistory, Link } from "react-router-dom";
+import { FiLogIn } from "react-icons/fi";
 
 function Login() {
-  
-  const [email, setEmail] = useState([]);
-  const [senha, setSenha] = useState([]);
+    const [email, setEmail] = useState([]);
+    const [senha, setSenha] = useState([]);
 
-  const history = useHistory();
+    const history = useHistory();
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const response = await api.post('/usuario',{email : email, senha : senha})
+    async function handleSubmit(e) {
+        e.preventDefault();
+        const response = await api.post("/usuario//authenticate", {
+            email: email,
+            senha: senha,
+        });
 
-    if(response.data.length !== 0){
-      
-      alert("Você está logado " + response.data[0].nome)
-      sessionStorage.setItem('nome', response.data[0].nome)
-      sessionStorage.setItem('sessionid',response.data[0]._id)
-      
-      // history.push('/home')
-      window.location.href='/home';
-      
-    }else{
-      alert('Usuário ou senha Inválidos')
+        if (response.data.length !== 0) {
+            alert("Você está logado " + response.data.usuario.nome);
+            sessionStorage.setItem("nome", response.data.usuario.nome);
+            sessionStorage.setItem("sessionid", response.data.usuario._id);
+            sessionStorage.setItem("Token", response.data.token);
+
+            // history.push('/home')
+            window.location.href = "/home";
+        } else {
+            alert("Usuário ou senha Inválidos");
+        }
+    }
+    function handleCadastro(e) {
+        history.push("/cadastro-usuario");
     }
 
-  }
-  function handleCadastro(e){
-    history.push('/cadastro-usuario')
-  }
-
-  useEffect(() => {
-    function autenticado(){
-      if(ehAutenticado()){
-        window.location.href='/home';
-      }
-    }
-    autenticado()
-  },[])
-  return (
-    <div className="Login-form">
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formBasicEmail">
-          <p align="left"><Form.Label>Email</Form.Label></p>
-          <Form.Control 
-            type="email" 
-            placeholder="Digite seu email cadastrado" 
-            onChange={e => setEmail(e.target.value)}
-            />
-          <Form.Text className="text-muted">
-          </Form.Text>
-        </Form.Group>
-
-        <Form.Group controlId="formBasicPassword">
-          <p align="left"><Form.Label>Senha</Form.Label></p>
-          <Form.Control 
-            type="password" 
-            placeholder="Digite a senha" 
-            onChange={e => setSenha(e.target.value)}
-            />
-        </Form.Group>
-          <Container>
-            <Row>
-              <Col md={2}><Button variant="primary" type="button" styles='margin-right: 10px' onClick={handleCadastro}>Cadastrar</Button></Col>
-              <Col md={{ span: 4, offset: 4 }}><Button variant="primary" type="submit">Entrar</Button></Col>
-            </Row>
-          </Container>
-      </Form>
-    </div>
-  );
+    useEffect(() => {
+        function autenticado() {
+            if (ehAutenticado()) {
+                window.location.href = "/home";
+            }
+        }
+        autenticado();
+    }, []);
+    return (
+        <div className="logon-container">
+            <section className="form">
+                <form onSubmit={handleSubmit}>
+                    <h1>Faça seu login</h1>
+                    <input
+                        placeholder="Email"
+                        type="email"
+                        value={email}
+                        placeholder="Digite seu Email"
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <input
+                        type="password"
+                        value={senha}
+                        placeholder="Digite sua Senha"
+                        onChange={(e) => setSenha(e.target.value)}
+                    />
+                    <button className="button">Entrar</button>
+                    <Link className="back-link" to="/cadastro-usuario">
+                        <FiLogIn
+                            className="FiLogin"
+                            size={16}
+                            color="#4983ee"
+                        />
+                        Não tenho cadastro
+                    </Link>
+                </form>
+            </section>
+        </div>
+    );
 }
 
 export default Login;

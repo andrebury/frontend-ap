@@ -1,73 +1,84 @@
-import React,{useState, useEffect} from 'react';
-import api from '../../../services/api'
-import {Table, Button,Modal,Form} from 'react-bootstrap';
-import {useHistory} from 'react-router-dom'
-
-
+import React, { useState, useEffect } from "react";
+import api from "../../../services/api";
+import { useHistory, Link } from "react-router-dom";
+import "./styles.css";
+import { IoMdAdd } from "react-icons/io";
 function Clientes() {
-  const history = useHistory();
+    const history = useHistory();
 
-  const [clientes, setClientes] = useState([])
+    const [clientes, setClientes] = useState([]);
 
+    useEffect(() => {
+        async function carregaClientes() {
+            const response = await api.get("/cliente/info", {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("Token")}`,
+                },
+            });
+            setClientes(response.data.clientes);
+            console.log(response.data.clientes);
+        }
 
-  useEffect(() => {  
-    async function carragaClientes(){
-      const response = await api.get('/clientes')
-      setClientes(response.data)
-      console.log(response.data)
+        carregaClientes();
+    }, []);
+
+    function handleEntrar(idCliente) {
+        if (idCliente.length > 10) {
+            history.push(`/cadastro-cliente?idCliente=${idCliente}`);
+        } else {
+            history.push(`/cadastro-cliente`);
+        }
     }
 
+    return (
+        <>
+            <h1>
+                Clientes{" "}
+                <Link onClick={handleEntrar}>
+                    <IoMdAdd color="#4983ee" />
+                </Link>
+            </h1>
 
-    carragaClientes();
-},[])
-
-function handleEntrar(idCliente) {
-  
-  if(idCliente.length > 10){
-    history.push(`/cadastro-cliente?idCliente=${idCliente}`)
-
-  }else{
-    history.push(`/cadastro-cliente`)
-  }
-  
-}
-
-
-
-  return (
-    <>
-    <p>Clientes</p>
-    <Table striped bordered hover responsive="xl">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Nome</th>
-          <th>Ramo</th>
-          <th>Solicitantes(separados por vírgula)</th>
-          <th>Alterar</th>
-        </tr>
-      </thead>
-      <tbody>
-      {clientes.map(cliente =>(
-        <tr key={cliente._id} >
-          <td>{cliente.cliente_id}</td>
-          <td>{cliente.nome}</td>
-          <td>{cliente.ramo}</td>
-          <td>{cliente.solicitantes.map(sol => ' ' + sol + ' ' ).toString()}</td>
-          <td><Button 
-                variant="light" 
-                size="sm" 
-                type="button" 
-                name={cliente._id}
-                onClick={() => handleEntrar(cliente._id)}>Entrar</Button></td>
-        </tr>
-      ))}
-        
-      </tbody>
-    </Table>
-    <Button type="button" name="tarefa" onClick={handleEntrar}>Cadastrar</Button>
-</>
-  );
+            <table id="clientes">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nome</th>
+                        <th>Ramo</th>
+                        <th>Solicitantes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {clientes.map((cliente) => (
+                        <tr key={cliente._id}>
+                            <td>{cliente.cliente_id}</td>
+                            <td>
+                                <Link
+                                    to={`/cadastro-cliente?idCliente=${cliente._id}`}
+                                >
+                                    {cliente.nome}
+                                </Link>
+                            </td>
+                            <td>{cliente.ramo}</td>
+                            <td>
+                                {cliente.solicitantes
+                                    .map((sol) => " " + sol + " ")
+                                    .toString()}
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            {/* <button
+                type="button"
+                className="button"
+                name="tarefa"
+                onClick={handleEntrar}
+            >
+                Cadastrar
+            </button> */}
+        </>
+    );
 }
 
 export default Clientes;

@@ -56,9 +56,21 @@ function Tarefas() {
             if (
                 querystring.parse(window.location.search).idBusca !== undefined
             ) {
-                await api.post("/update/tarefa", data);
+                await api.post("/update/tarefa", data, {
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem(
+                            "Token"
+                        )}`,
+                    },
+                });
             } else {
-                await api.post("/cadastro/tarefa", data);
+                await api.post("/cadastro/tarefa", data, {
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem(
+                            "Token"
+                        )}`,
+                    },
+                });
             }
             history.push(
                 `/tarefas?idBusca=${
@@ -88,20 +100,40 @@ function Tarefas() {
 
     useEffect(() => {
         async function loadInfo() {
-            await api.post("/usuario", {}).then((response) => {
-                console.log(response.data);
-                setResponsaveisAPI(response.data);
-                setResponsavelSelecionado(response.data[0]._id);
-                setResponsavel(response.data[0].nome);
+            await api
+                .post(
+                    "/usuario",
+                    {},
+                    {
+                        headers: {
+                            Authorization: `Bearer ${sessionStorage.getItem(
+                                "Token"
+                            )}`,
+                        },
+                    }
+                )
+                .then((response) => {
+                    console.log(response.data);
+                    setResponsaveisAPI(response.data);
+                    setResponsavelSelecionado(response.data[0]._id);
+                    setResponsavel(response.data[0].nome);
 
-                setSolicitanteSelecionado(sessionStorage.getItem("sessionid"));
-                setSolicitante(sessionStorage.getItem("nome"));
-            });
+                    setSolicitanteSelecionado(
+                        sessionStorage.getItem("sessionid")
+                    );
+                    setSolicitante(sessionStorage.getItem("nome"));
+                });
 
             const idBusca = querystring.parse(window.location.search).idBusca;
 
             if (idBusca) {
-                const tarefaInfo = await api.get("/tarefa/" + idBusca);
+                const tarefaInfo = await api.get("/tarefa/" + idBusca, {
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem(
+                            "Token"
+                        )}`,
+                    },
+                });
                 setTarefa_id(tarefaInfo.data.tarefa_id);
                 setNomeProjeto(tarefaInfo.data.projeto.titulo);
                 setTitulo(tarefaInfo.data.titulo);
@@ -122,7 +154,14 @@ function Tarefas() {
                     .get(
                         `/projeto/${
                             querystring.parse(window.location.search).idProjeto
-                        }`
+                        }`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${sessionStorage.getItem(
+                                    "Token"
+                                )}`,
+                            },
+                        }
                     )
                     .then((response) => {
                         setNomeProjeto(response.data.titulo);
@@ -134,9 +173,9 @@ function Tarefas() {
 
     function Titulo() {
         if (tarefa_id) {
-            return <p>Atualizar Tarefa {titulo}</p>;
+            return <h1>Atualizar Tarefa {titulo}</h1>;
         } else {
-            return <p>Cadastro Tarefa </p>;
+            return <h1>Cadastro Tarefa </h1>;
         }
     }
 
