@@ -28,7 +28,7 @@ function Tarefas() {
             cliente: t[0].cliente,
             titulo: t[0].titulo,
             descricao: t[0].descricao,
-            solicitante: t[0].solicitante_cliente,
+            solicitante: t[0].solicitante,
             pm: t[0].pm,
             funcional: t[0].funcional,
             prazo: t[0].prazo,
@@ -119,9 +119,9 @@ function Tarefas() {
                 }
             );
 
-            setTarefas(response.data);
-            console.log(response.data);
-            setObservacoes(response.data.observacoes);
+            setTarefas(response.data.tarefas);
+            console.log(response.data.tarefas);
+            setObservacoes(response.data.tarefas.observacoes);
         }
         carregaTarefas();
     }, []);

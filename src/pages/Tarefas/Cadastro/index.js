@@ -102,7 +102,7 @@ function Tarefas() {
         async function loadInfo() {
             await api
                 .post(
-                    "/usuario/info",
+                    "/userinfo/info",
                     {},
                     {
                         headers: {
@@ -114,9 +114,9 @@ function Tarefas() {
                 )
                 .then((response) => {
                     console.log(response.data);
-                    setResponsaveisAPI(response.data);
-                    setResponsavelSelecionado(response.data[0]._id);
-                    setResponsavel(response.data[0].nome);
+                    setResponsaveisAPI(response.data.usr);
+                    setResponsavelSelecionado(response.data.usr[0]._id);
+                    setResponsavel(response.data.usr[0].nome);
 
                     setSolicitanteSelecionado(
                         sessionStorage.getItem("sessionid")
@@ -134,21 +134,21 @@ function Tarefas() {
                         )}`,
                     },
                 });
-                setTarefa_id(tarefaInfo.data.tarefa_id);
-                setNomeProjeto(tarefaInfo.data.projeto.titulo);
-                setTitulo(tarefaInfo.data.titulo);
-                setStatus(tarefaInfo.data.status);
-                setSolicitante(tarefaInfo.data.solicitante.nome);
-                setSolicitanteSelecionado(tarefaInfo.data.solicitante._id);
-                setHoras(tarefaInfo.data.horas);
-                setPrioridade(tarefaInfo.data.prioridade);
-                setInicio(tarefaInfo.data.inicio);
-                setPrazo(tarefaInfo.data.prazo);
-                setFim(tarefaInfo.data.fim);
-                setDescricao(tarefaInfo.data.descricao);
-                set_id(tarefaInfo.data._id);
-                setResponsavel(tarefaInfo.data.desenvolvedor);
-                setObservacoes(tarefaInfo.data.observacoes);
+                setTarefa_id(tarefaInfo.data.tarefas.tarefa_id);
+                setNomeProjeto(tarefaInfo.data.tarefas.projeto.titulo);
+                setTitulo(tarefaInfo.data.tarefas.titulo);
+                setStatus(tarefaInfo.data.tarefas.status);
+                setSolicitante(tarefaInfo.data.tarefas.solicitante.nome);
+                setSolicitanteSelecionado(tarefaInfo.data.tarefas.solicitante._id);
+                setHoras(tarefaInfo.data.tarefas.horas);
+                setPrioridade(tarefaInfo.data.tarefas.prioridade);
+                setInicio(tarefaInfo.data.tarefas.inicio);
+                setPrazo(tarefaInfo.data.tarefas.prazo);
+                setFim(tarefaInfo.data.tarefas.fim);
+                setDescricao(tarefaInfo.data.tarefas.descricao);
+                set_id(tarefaInfo.data.tarefas._id);
+                setResponsavel(tarefaInfo.data.tarefas.desenvolvedor);
+                setObservacoes(tarefaInfo.data.tarefas.observacoes);
             } else {
                 await api
                     .get(
