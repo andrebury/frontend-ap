@@ -108,7 +108,7 @@ function Tarefas() {
             );
 
             const response = await api.post(
-                "/tarefas",
+                "/tarefas/info",
                 { projeto: idBusca },
                 {
                     headers: {
