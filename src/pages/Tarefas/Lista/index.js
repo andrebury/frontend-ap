@@ -40,7 +40,7 @@ function Tarefas() {
             desenvolvedor: t[0].desenvolvedor,
         };
 
-        const response = await api.post("/update/tarefa", data, {
+        const response = await api.post("/tarefa/update", data, {
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("Token")}`,
             },
@@ -108,7 +108,7 @@ function Tarefas() {
             );
 
             const response = await api.post(
-                "/tarefas/info",
+                "/tarefa/info",
                 { projeto: idBusca },
                 {
                     headers: {

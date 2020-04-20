@@ -56,7 +56,7 @@ function Tarefas() {
             if (
                 querystring.parse(window.location.search).idBusca !== undefined
             ) {
-                await api.post("/update/tarefa", data, {
+                await api.post("/tarefa/update", data, {
                     headers: {
                         Authorization: `Bearer ${sessionStorage.getItem(
                             "Token"
@@ -64,7 +64,7 @@ function Tarefas() {
                     },
                 });
             } else {
-                await api.post("/cadastro/tarefa", data, {
+                await api.post("/tarefa/cadastro", data, {
                     headers: {
                         Authorization: `Bearer ${sessionStorage.getItem(
                             "Token"
@@ -102,7 +102,7 @@ function Tarefas() {
         async function loadInfo() {
             await api
                 .post(
-                    "/usuario",
+                    "/usuario/info",
                     {},
                     {
                         headers: {
@@ -127,7 +127,7 @@ function Tarefas() {
             const idBusca = querystring.parse(window.location.search).idBusca;
 
             if (idBusca) {
-                const tarefaInfo = await api.get("/tarefa/" + idBusca, {
+                const tarefaInfo = await api.get("/tarefa/id/" + idBusca, {
                     headers: {
                         Authorization: `Bearer ${sessionStorage.getItem(
                             "Token"
@@ -152,7 +152,7 @@ function Tarefas() {
             } else {
                 await api
                     .get(
-                        `/projeto/${
+                        `/projeto/id/${
                             querystring.parse(window.location.search).idProjeto
                         }`,
                         {
