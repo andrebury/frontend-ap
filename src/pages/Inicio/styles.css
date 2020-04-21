@@ -2,6 +2,8 @@
     margin: 0;
     outline: 0;
     padding: 0;
+    margin-left: 20px;
+    margin-right: 20px;
 
     display: grid;
     grid-template-columns: 3fr 1fr;
