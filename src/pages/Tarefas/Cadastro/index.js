@@ -27,7 +27,7 @@ function Tarefas() {
     const [solicitanteSelecionado, setSolicitanteSelecionado] = useState("");
     const [responsaveisAPI, setResponsaveisAPI] = useState(["Escolha..."]);
     const [validated, setValidated] = useState(false);
-
+    const [projetoID, setProjetoID] = useState("");
     async function handleSubmit(e) {
         const form = e.currentTarget;
         if (form.checkValidity() === false) {
@@ -39,7 +39,7 @@ function Tarefas() {
         const data = {
             _id,
             titulo,
-            projeto: querystring.parse(window.location.search).idProjeto,
+            projeto: projetoID,
             solicitante: solicitanteSelecionado,
             desenvolvedor: responsavelSelecionado,
             inicio,
@@ -139,7 +139,9 @@ function Tarefas() {
                 setTitulo(tarefaInfo.data.tarefas.titulo);
                 setStatus(tarefaInfo.data.tarefas.status);
                 setSolicitante(tarefaInfo.data.tarefas.solicitante.nome);
-                setSolicitanteSelecionado(tarefaInfo.data.tarefas.solicitante._id);
+                setSolicitanteSelecionado(
+                    tarefaInfo.data.tarefas.solicitante._id
+                );
                 setHoras(tarefaInfo.data.tarefas.horas);
                 setPrioridade(tarefaInfo.data.tarefas.prioridade);
                 setInicio(tarefaInfo.data.tarefas.inicio);
@@ -149,6 +151,7 @@ function Tarefas() {
                 set_id(tarefaInfo.data.tarefas._id);
                 setResponsavel(tarefaInfo.data.tarefas.desenvolvedor);
                 setObservacoes(tarefaInfo.data.tarefas.observacoes);
+                setProjetoID(tarefaInfo.data.tarefas.projeto._id);
             } else {
                 await api
                     .get(
@@ -165,6 +168,7 @@ function Tarefas() {
                     )
                     .then((response) => {
                         setNomeProjeto(response.data.titulo);
+                        setProjetoID(response.data._id);
                     });
             }
         }
