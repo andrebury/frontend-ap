@@ -32,50 +32,60 @@ function App() {
       return "";
     }
   };
+  const NavbarSuperior = () => {
+      if(window.location.pathname !== '/' & window.location.pathname !== '/cadastro-usuario'){
+        return (
+                <>
+                <Navbar bg="light" expand="xl" fixed="top">
+                <Navbar.Brand href="/home">
+                    <h3>Acompanhamento de Projetos</h3>
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="mr-auto">
+                    <Nav.Link href="/home">Início</Nav.Link>
+                    
+                    <NavDropdown title="Projetos" id="basic-nav-dropdown">
+                        <NavDropdown.Item href="/cadastro-projeto">
+                        Novo Projeto
+                        </NavDropdown.Item>
+                        <NavDropdown.Item href="/lista-projetos">
+                        Lista Projetos
+                        </NavDropdown.Item>
+                    </NavDropdown>
+                    <Nav.Link href="/arquivos">Arquivos</Nav.Link>
+                    <Nav.Link href="/clientes">Clientes</Nav.Link>
+                    <Nav.Link href="/relatorio">Relatorios</Nav.Link>
+                    </Nav>
+                    <Navbar.Toggle />
+                    <Navbar.Collapse className="justify-content-end">
+                    <Navbar.Text>
+                        <Usuario />
+                    </Navbar.Text>
+                    </Navbar.Collapse>
+                </Navbar.Collapse>
+                </Navbar>
+                </>
+            )
+      }else{
+        return (
+                <>
+                    <Navbar bg="light" expand="xl" fixed="top">
+                    <Navbar.Brand href="/home">
+                        <h3>Acompanhamento de Projetos</h3>
+                    </Navbar.Brand>
+                    </Navbar>
+                </>
+      )
+      }
+      
+  }
+
 
   return (
     <div className="App">
-      <div className="container">
-        <Navbar bg="light" expand="xl" fixed="top">
-          <Navbar.Brand href="/home">
-            <h3>Acompanhamento de Projetos</h3>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
-              <Nav.Link href="/home">Início</Nav.Link>
-              <NavDropdown title="Projetos" id="basic-nav-dropdown">
-                <NavDropdown.Item href="/cadastro-projeto">
-                  Novo Projeto
-                </NavDropdown.Item>
-                <NavDropdown.Item href="/lista-projetos">
-                  Lista Projetos
-                </NavDropdown.Item>
-              </NavDropdown>
-              <Nav.Link href="/arquivos">Arquivos</Nav.Link>
-              <Nav.Link href="/clientes">Clientes</Nav.Link>
-              <Nav.Link href="/relatorio">Relatorios</Nav.Link>
-            </Nav>
-            {/* <Form inline onSubmit={handlesubmit}>
-            <FormControl 
-              type="text" 
-              placeholder="Buscar Projeto" 
-              className="mr-sm-2"
-              onChange={handleChange}/>          
-              <Button variant="outline-success" type="submit">Buscar</Button>     
-          </Form> */}
-            <Navbar.Toggle />
-            <Navbar.Collapse className="justify-content-end">
-              <Navbar.Text>
-                <Usuario />
-              </Navbar.Text>
-            </Navbar.Collapse>
-          </Navbar.Collapse>
-        </Navbar>
-        <div className="content">
+        <NavbarSuperior/>
           <Routes />
-        </div>
-      </div>
     </div>
   );
 }
