@@ -38,7 +38,7 @@ function Clientes() {
                     <IoMdAdd color="#4983ee" />
                 </Link>
             </h1>
-
+            <div align="center">
             <table id="clientes">
                 <thead>
                     <tr>
@@ -69,14 +69,8 @@ function Clientes() {
                     ))}
                 </tbody>
             </table>
-            {/* <button
-                type="button"
-                className="button"
-                name="tarefa"
-                onClick={handleEntrar}
-            >
-                Cadastrar
-            </button> */}
+            </div>
+            
         </>
     );
 }

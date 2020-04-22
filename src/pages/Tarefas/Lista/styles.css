@@ -1,25 +1,47 @@
-#tarefas {
+#lista-tarefas {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    width: 100%;
+    width: 1600px;
 }
 
-#tarefas td,
-#tarefas th {
+#lista-tarefas td,
+#lista-tarefas th {
     border: 1px solid #ddd;
     padding: 8px;
 }
 
-#tarefas tr:nth-child(even) {
+#lista-tarefas tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-#tarefas tr:hover {
+#lista-tarefas tr:hover {
     background-color: #ddd;
 }
 
-#tarefas th {
+#lista-tarefas th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: center;
+}
+
+button {
+    cursor: pointer;
+}
+
+.button {
+    background: #4983ee;
+    border: 0;
+    border-radius: 8px;
+    color: #fff;
+    margin-top: 16px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 7;
+    line-height: 60px;
+    transition: 0.2s;
+}
+
+.button:hover {
+    filter: brightness(90%);
 }

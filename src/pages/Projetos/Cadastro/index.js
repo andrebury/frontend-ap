@@ -261,9 +261,7 @@ function CadastroProjetos() {
 
     return (
         <>
-            <div>
                 <Titulo />
-            </div>
 
             <div>
                 <Form noValidate onSubmit={handleSave} validated={validated}>

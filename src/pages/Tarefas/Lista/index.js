@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button, Modal, Form } from "react-bootstrap";
+import {  Button, Modal, Form } from "react-bootstrap";
 import { useHistory, Link } from "react-router-dom";
 import querystring from "query-string";
 import { IoMdAdd } from "react-icons/io";
+import './styles.css'
 
 import api from "../../../services/api";
 
@@ -127,15 +128,16 @@ function Tarefas() {
     }, []);
 
     return (
-        <div classname="tabela-lista">
+        <>       
+
             <h1>
                 Tarefas{" "}
                 <Link onClick={handleEntrar}>
                     <IoMdAdd color="#4983ee" />
                 </Link>
             </h1>
-
-            <table id="tarefas">
+            <div align="center">
+            <table id="lista-tarefas">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -177,7 +179,7 @@ function Tarefas() {
                     ))}
                 </tbody>
             </table>
-
+            </div>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Observações</Modal.Title>
@@ -203,7 +205,8 @@ function Tarefas() {
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </div>
+
+       </>
     );
 }
 export default Tarefas;

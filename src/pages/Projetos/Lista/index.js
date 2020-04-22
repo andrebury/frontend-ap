@@ -51,17 +51,15 @@ function ListaProjetos() {
     }, []);
 
     return (
-        <div classname="tabela-lista">
+        <>
+            
             <h1>
                 Lista de Projetos{" "}
                 <Link onClick={handleEntrar}>
                     <IoMdAdd color="#4983ee" />
                 </Link>
             </h1>
-            {/* <Button type="button" name="tarefa" onClick={handleCadastrar}>
-                Cadastrar
-            </Button> */}
-
+            <div align="center">
             <table id="projetos">
                 <thead>
                     <tr>
@@ -108,7 +106,9 @@ function ListaProjetos() {
                     ))}
                 </tbody>
             </table>
-        </div>
+
+            </div>
+            </>
     );
 }
 
