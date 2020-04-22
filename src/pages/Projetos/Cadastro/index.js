@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import querystring from "query-string";
-import { Form, Button, Col } from "react-bootstrap";
-
+import './styles.css'
 import api from "../../../services/api";
 
 function CadastroProjetos() {
     const history = useHistory();
 
-    const [clientes, setClientes] = useState(["Escolha..."]);
+    const [clientes, setClientes] = useState(["Escolha"]);
     const [titulo, setTitulo] = useState("");
     const [projeto_id, setProjeto_id] = useState("");
-    const [funcional, setFuncional] = useState("");
+    const [funcional, setFuncional] = useState(["Escolha"]);
     const [horas, setHoras] = useState(0);
-    const [prioridade, setPrioridade] = useState("Média");
+    const [prioridade, setPrioridade] = useState(["Escolha a prioridade"]);
     const [prazo, setPrazo] = useState("00/00/0000");
     const [descricao, setDescricao] = useState("");
     const [cliente, setCliente] = useState("");
 
-    const [funcsAPI, setFuncsAPI] = useState(["Escolha..."]);
-    const [pmsAPI, setPmsAPI] = useState(["Escolha..."]);
+    const [funcsAPI, setFuncsAPI] = useState(["Escolha"]);
+    const [pmsAPI, setPmsAPI] = useState(["Escolha"]);
 
     const [inicio, setInicio] = useState("00/00/0000");
     const [pm, setPm] = useState("");
@@ -212,9 +211,9 @@ function CadastroProjetos() {
     function Tarefas() {
         if (_id.length > 10) {
             return (
-                <Button type="button" name="tarefa" onClick={HandleTarefa}>
+                <button className="button" type="button" name="tarefa" onClick={HandleTarefa}>
                     Tarefas
-                </Button>
+                </button>
             );
         } else {
             return "";
@@ -263,191 +262,98 @@ function CadastroProjetos() {
         <>
                 <Titulo />
 
-            <div>
-                <Form noValidate onSubmit={handleSave} validated={validated}>
-                    <Form.Row>
-                        <Form.Group as={Col} controlId="titulo">
-                            <Form.Label>Título</Form.Label>
-                            <Form.Control
-                                required
-                                type="text"
-                                placeholder="Título do Projeto"
-                                value={titulo}
-                                onChange={(e) => setTitulo(e.target.value)}
-                                required
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                Digite o Título do Projeto
-                            </Form.Control.Feedback>
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="cliente">
-                            <Form.Label>Cliente</Form.Label>
-                            <Form.Control
-                                as="select"
-                                onChange={HandleCliente}
-                                value={cliente.nome}
-                                required
+            <div className="cadastro-container">
+                <form onSubmit={handleSave}>
+                    <section className="primeiro">
+                    <div className="titulo">
+                    <label>Título</label>
+                    <input type="text" maxLength="60" placeholder="Título do Projeto" value={titulo} onChange={(e) => setTitulo(e.target.value)}/>
+                    </div>
+                    <div className="cliente">
+                    <label>Cliente</label>
+                    <select onChange={HandleCliente} value={cliente.nome}>
+                        {clientes.map((cliente) => (
+                            <option
+                                key={cliente._id}
+                                name={cliente._id}
                             >
-                                <option>Escolha...</option>
-                                {clientes.map((cliente) => (
-                                    <option
-                                        key={cliente._id}
-                                        name={cliente._id}
-                                    >
-                                        {" "}
-                                        {cliente.nome}
-                                    </option>
-                                ))}
-                            </Form.Control>
-                            <Form.Control.Feedback type="invalid">
-                                Escolha o cliente
-                            </Form.Control.Feedback>
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="status_projeto">
-                            <Form.Label>Status</Form.Label>
-                            <Form.Control
-                                as="select"
-                                value={status_projeto}
-                                onChange={(e) =>
-                                    setStatus_projeto(e.target.value)
-                                }
-                            >
-                                <option>Aprovado</option>
-                                <option>Desenho</option>
-                                <option>Desenvolvimento</option>
-                                <option>Testes</option>
-                                <option>Homologação</option>
-                                <option>Pós Implantação</option>
-                                <option>Finalizado</option>
-                            </Form.Control>
-                        </Form.Group>
-                    </Form.Row>
-
-                    <Form.Row>
-                        <Form.Group as={Col} controlId="pm">
-                            <Form.Label>PM</Form.Label>
-                            <Form.Control
-                                as="select"
-                                onChange={HandlePm}
-                                value={pm.nome}
-                            >
-                                <option>Escolha...</option>
+                                {" "}
+                                {cliente.nome}
+                            </option>
+                        ))}
+                    </select>
+                    </div>
+                    <div className="status">
+                    <label>Status</label>
+                    <select value={status_projeto} onChange={(e) => setStatus_projeto(e.target.value)}>
+                        <option>Aprovado</option>
+                        <option>Desenho</option>
+                        <option>Desenvolvimento</option>
+                        <option>Testes</option>
+                        <option>Homologação</option>
+                        <option>Pós Implantação</option>
+                        <option>Finalizado</option>
+                    </select>
+                    </div>
+                    </section>
+                    <section className="segundo">
+                    <div className="pm">
+                    <label>PM</label>
+                        <select onChange={HandlePm} value={pm.nome}>
                                 {pmsAPI.map((pm) => (
                                     <option key={pm._id} name={pm._id}>
                                         {" "}
                                         {pm.nome}
                                     </option>
                                 ))}
-                            </Form.Control>
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="funcional">
-                            <Form.Label>Funcional</Form.Label>
-                            <Form.Control
-                                as="select"
-                                onChange={(e) => handleFuncional(e)}
-                                value={funcional.nome}
-                            >
-                                <option>Escolha...</option>
-                                {funcsAPI.map((func) => (
-                                    <option key={func._id} name={func._id}>
-                                        {" "}
-                                        {func.nome}
-                                    </option>
-                                ))}
-                            </Form.Control>
-                        </Form.Group>
-                    </Form.Row>
-
-                    <Form.Row>
-                        <Form.Group as={Col} controlId="horas">
-                            <Form.Label>Horas</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Horas"
-                                required
-                                value={horas}
-                                onChange={(e) => setHoras(e.target.value)}
-                            />
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="prioridade">
-                            <Form.Label>Prioridade</Form.Label>
-                            <Form.Control
-                                as="select"
-                                value={prioridade}
-                                onChange={(e) => setPrioridade(e.target.value)}
-                            >
-                                <option>Alta</option>
-                                <option>Média</option>
-                                <option>Baixa</option>
-                            </Form.Control>
-                        </Form.Group>
-                    </Form.Row>
-
-                    <Form.Row>
-                        <Form.Group as={Col} controlId="inicio">
-                            <Form.Label>Início</Form.Label>
-                            <Form.Control
-                                type="date"
-                                placeholder="Início"
-                                required
-                                value={inicio}
-                                onChange={(e) => setInicio(e.target.value)}
-                                required
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                Escolha a data início
-                            </Form.Control.Feedback>
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="prazo">
-                            <Form.Label>Prazo</Form.Label>
-                            <Form.Control
-                                type="date"
-                                placeholder="Prazo"
-                                required
-                                value={prazo}
-                                onChange={(e) => setPrazo(e.target.value)}
-                            />
-                        </Form.Group>
-                    </Form.Row>
-
-                    <Form.Row>
-                        <Form.Group as={Col} controlId="descricao">
-                            <Form.Label>Descrição</Form.Label>
-                            <Form.Control
-                                as="textarea"
-                                rows="5"
-                                value={descricao}
-                                onChange={(e) => setDescricao(e.target.value)}
-                            />
-                        </Form.Group>
-                    </Form.Row>
-
-                    <Form.Row>
-                        <Form.Group as={Col} controlId="observacoes">
-                            <Form.Label>Observações</Form.Label>
-                            <Form.Control
-                                as="textarea"
-                                rows="5"
-                                value={observacoes}
-                                onChange={(e) => setObservacoes(e.target.value)}
-                            />
-                        </Form.Group>
-                    </Form.Row>
-
-                    <Col md={{ span: 6, offset: 3 }}>
-                        <Button type="submit">Salvar</Button>
-                    </Col>
-                    <br></br>
-
-                    <Col md={{ span: 6, offset: 3 }}>
-                        <Tarefas />
-                    </Col>
-                </Form>
+                        </select>
+                        </div>
+                        <div className="funcional">
+                        <label>Funcional</label>
+                        <select onChange={(e) => handleFuncional(e)} value={funcional.nome}>
+                            {funcsAPI.map((func) => (
+                                <option key={func._id} name={func._id}>
+                                    {" "}
+                                    {func.nome}
+                                </option>
+                            ))}
+                        </select>
+                        </div>
+                        <div className="prioridade">
+                        <label>Prioridade</label>
+                        <select value={prioridade} onChange={(e) => setPrioridade(e.target.value)}>
+                            <option>Alta</option>
+                            <option>Média</option>
+                            <option>Baixa</option>
+                    </select>
+                    </div>
+                    </section>
+                    
+                    <section className="quarto">
+                        <div className="horas">
+                        <label>Horas</label>
+                        <input type="number" placeholder="Horas do Projeto" value={horas} onChange={(e) => setHoras(e.target.value)}/>
+                        </div>
+                        <div className="inicio">
+                        <label>Início</label>
+                        <input type="date" value={inicio} onChange={(e) => setInicio(e.target.value)}/>
+                        </div>
+                        <div className="prazo">
+                        <label>Prazo</label>
+                        <input type="date" value={prazo} onChange={(e) => setPrazo(e.target.value)}/>
+                        </div>
+                    </section>
+                    <div className="descricao">
+                    <label>Descrição</label>
+                        <textarea rows="2" value={descricao} onChange={(e) => setDescricao(e.target.value)}/>
+                    </div>
+                    <div className="observacoes">
+                    <label>Observações</label>
+                        <textarea rows="2" value={observacoes} onChange={(e) => setObservacoes(e.target.value)}/>
+                    </div>
+                        <button className="button" type="submit">Salvar</button>
+                        <Tarefas/>
+                </form>
             </div>
         </>
     );
