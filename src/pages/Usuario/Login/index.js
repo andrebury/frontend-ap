@@ -12,14 +12,12 @@ function Login() {
 
     const history = useHistory();
 
-    async function handleSubmit(e) {
+    function handleSubmit(e) {
         e.preventDefault();
-        const response = await api.post("/usuario//authenticate", {
+        const response = api.post("/usuario//authenticate", {
             email: email,
             senha: senha,
-        });
-
-        if (response.data.length !== 0) {
+        }).then(response =>{
             alert("Você está logado " + response.data.usuario.nome);
             sessionStorage.setItem("nome", response.data.usuario.nome);
             sessionStorage.setItem("sessionid", response.data.usuario._id);
@@ -27,10 +25,11 @@ function Login() {
 
             // history.push('/home')
             window.location.href = "/home";
-        } else {
+        }).catch(error => {
             alert("Usuário ou senha Inválidos");
-        }
+        })
     }
+
     function handleCadastro(e) {
         history.push("/cadastro-usuario");
     }

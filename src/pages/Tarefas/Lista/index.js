@@ -85,7 +85,7 @@ function Tarefas() {
     }
 
     function handleEntrar(idaTar) {
-        console.log("idBusca2: " + idProjeto);
+        console.log("idBusca: " + idProjeto);
         console.log("idaTar: " + idaTar);
 
         if (idaTar.length > 10) {
