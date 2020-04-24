@@ -132,7 +132,7 @@ function Tarefas() {
 
             <h1>
                 Tarefas{" "}
-                <Link onClick={handleEntrar}>
+                <Link to={`/cadastro-tarefa?idProjeto=${idProjeto}`} >
                     <IoMdAdd color="#4983ee" />
                 </Link>
             </h1>

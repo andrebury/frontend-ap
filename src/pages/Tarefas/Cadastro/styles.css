@@ -1,0 +1,83 @@
+.cadastro-container{
+    width: 1000px;
+    
+}
+select {
+    text-align: center;
+}
+
+label {
+    font-size: 25px;
+    margin-right: 10px;
+
+}
+
+button {
+    cursor: pointer;
+}
+
+button {
+    cursor: pointer;
+}
+
+
+.button {
+    width: 300px;
+    height: 60px;
+    background: #4983ee;
+    border: 0;
+    border-radius: 8px;
+    color: #fff;
+    margin-top: 16px;
+    margin-left: 10px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 7;
+    line-height: 60px;
+    transition: 0.2s;
+}
+
+.button:hover {
+    filter: brightness(90%);
+}
+
+textarea {
+    width: 100%;
+} 
+
+section{
+    justify-content: space-between
+}
+
+.primeiro input {
+    width: 500px;
+    margin-right: 20px
+}
+.primeiro select {
+    width: 200px;
+    margin-left: 10px
+}
+
+.segundo input {
+    width: 200px;
+}
+
+.segundo select {
+    width: 200px;
+    
+}
+textarea {
+    width: 100%;
+} 
+
+.descricao {
+    margin-bottom: 20px;
+    width: 100%
+}
+
+.observacao {
+    margin-bottom: 20px;
+    width: 100%
+
+}

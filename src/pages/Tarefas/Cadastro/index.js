@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory , Link} from "react-router-dom";
 
-import { Form, Button, Col } from "react-bootstrap";
 import querystring from "query-string";
+import {MdKeyboardBackspace} from 'react-icons/md';
+
+import './styles.css'
 
 import api from "../../../services/api";
+import { stat } from "fs";
 
 function Tarefas() {
     const history = useHistory();
@@ -28,14 +31,24 @@ function Tarefas() {
     const [responsaveisAPI, setResponsaveisAPI] = useState(["Escolha..."]);
     const [validated, setValidated] = useState(false);
     const [projetoID, setProjetoID] = useState("");
-    async function handleSubmit(e) {
-        const form = e.currentTarget;
-        if (form.checkValidity() === false) {
-            e.preventDefault();
-            e.stopPropagation();
+
+    function validador(){
+        let arrayvars = [titulo, solicitante, inicio, fim, prazo, prioridade, status]
+        for (let vars in arrayvars){
+            if(vars.length === 0 || vars === undefined){
+                return 0
+            }
+            setValidated(true)
         }
-        setValidated(true);
+    }
+
+    function handleSubmit(e) {
         e.preventDefault();
+        validador();
+        console.log(validated)
+        if (validated === false) {
+            alert("Preencha corretamente os campos!")            
+        }else{
         const data = {
             _id,
             titulo,
@@ -51,34 +64,27 @@ function Tarefas() {
             prioridade,
             observacoes,
         };
-
-        if (form.checkValidity() !== false) {
-            if (
-                querystring.parse(window.location.search).idBusca !== undefined
-            ) {
-                await api.post("/tarefa/update", data, {
-                    headers: {
-                        Authorization: `Bearer ${sessionStorage.getItem(
-                            "Token"
-                        )}`,
-                    },
-                });
-            } else {
-                await api.post("/tarefa/cadastro", data, {
-                    headers: {
-                        Authorization: `Bearer ${sessionStorage.getItem(
-                            "Token"
-                        )}`,
-                    },
-                });
-            }
-            history.push(
-                `/tarefas?idBusca=${
-                    querystring.parse(window.location.search).idProjeto
-                }`
-            );
+        let apipath = '';
+        if (querystring.parse(window.location.search).idBusca !== undefined || validated === true) {
+            apipath = '/tarefa/update'
+        }else{
+            apipath = '/tarefa/cadastro'
         }
+            api.post(apipath, data, {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem(
+                        "Token"
+                    )}`,
+                },
+            }).then(resp => {
+                alert('Tarefa Salva!');
+            }).catch(err => {
+                alert('Ocorreu um erro. Tente novamente!')
+                setValidated(false)
+            });
+        
     }
+}
 
     function handleResponsavel(e) {
         const dID = responsaveisAPI.filter(
@@ -167,8 +173,8 @@ function Tarefas() {
                         }
                     )
                     .then((response) => {
-                        setNomeProjeto(response.data.titulo);
-                        setProjetoID(response.data._id);
+                        setNomeProjeto(response.data.projetos.titulo);
+                        setProjetoID(response.data.projetos._id);
                     });
             }
         }
@@ -177,184 +183,109 @@ function Tarefas() {
 
     function Titulo() {
         if (tarefa_id) {
-            return <h1>Atualizar Tarefa {titulo}</h1>;
+            return <h1> <Link to={`/tarefas?idBusca=${projetoID}`}> <MdKeyboardBackspace color="#4983ee"/> </Link>{" "}Atualizar Tarefa {titulo}</h1>
         } else {
-            return <h1>Cadastro Tarefa </h1>;
+            return <h1><Link to={`/tarefas?idBusca=${projetoID}`}><MdKeyboardBackspace color="#4983ee" /></Link>{" "}Cadastro Tarefa</h1>
         }
     }
 
     return (
         <>
+            <Titulo />
+
+            <div className="cadastro-container">
+            <form onSubmit={handleSubmit}>
+            <section className="primeiro">
             <div>
-                <Titulo />
+            <label>Título</label>
+            <input type="text" value={titulo} onChange={(e) => setTitulo(e.target.value)}/>
+             </div>
+             <div>
+             <label>Projeto</label>
+            <input type="text" value={nomeProjeto} onChange={(e) => setNomeProjeto(e.target.value)}/>
             </div>
             <div>
-                <Form noValidate onSubmit={handleSubmit} validated={validated}>
-                    <Form.Row>
-                        <Form.Group as={Col} controlId="titulo">
-                            <Form.Label>Título</Form.Label>
-                            <Form.Control
-                                required
-                                type="text"
-                                placeholder="Título da Tarefa"
-                                value={titulo}
-                                onChange={(e) => setTitulo(e.target.value)}
-                                required
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                Digite o Título da Tarefa
-                            </Form.Control.Feedback>
-                        </Form.Group>
+            <label>Solicitante</label>
 
-                        <Form.Group as={Col} controlId="projeto">
-                            <Form.Label>Projeto</Form.Label>
-                            <Form.Control type="text" value={nomeProjeto} />
-                        </Form.Group>
+            <select value={solicitante} onChange={handleSolicitante}>
+            {responsaveisAPI.map((solres) => (
+                <option key={solres._id} name={solres._id}>
+                    {" "}
+                    {solres.nome}
+                </option>
+            ))}
+            
+            </select>
+            </div>
+            <div>
+            <label>Responsável</label>
+            <select onChange={handleResponsavel} value={responsavel.nome}>
+            {responsaveisAPI.map((responsavel) => (
+                <option
+                    key={responsavel._id}
+                    name={responsavel._id}
+                >
+                    {" "}
+                    {responsavel.nome}
+                </option>
+            ))}
+            </select>
+            </div>            
+            </section>
+            
+            <section className="segundo">
+            
+            <div>
+            <label>Horas</label>
+            <input type="number" value={horas} onChange={(e) => setHoras(e.target.value)}/>
+            </div>
+            <div>
+            <label>Início</label>
+            <input type="date" value={inicio} onChange={(e) => setInicio(e.target.value)}/>
+            </div>
+            <div>
+            <label>Fim</label>
+            <input type="date" value={fim} onChange={(e) => setFim(e.target.value)}/>
+            </div>
+            <div>
+            <label>Prazo</label>
+            <input type="date" value={prazo} onChange={(e) => setPrazo(e.target.value)}/>
+            </div>
+                <div>
+            <label>Prioridade</label>
+            <select value={prioridade} onChange={(e) => setPrioridade(e.target.value)}>
+                <option>Alta</option>
+                <option>Média</option>
+                <option>Baixa</option>
+            </select>
 
-                        <Form.Group as={Col} controlId="solicitante">
-                            <Form.Label>Solicitante</Form.Label>
-                            <Form.Control
-                                as="select"
-                                onChange={handleSolicitante}
-                                value={solicitante}
-                            >
-                                {responsaveisAPI.map((solres) => (
-                                    <option key={solres._id} name={solres._id}>
-                                        {" "}
-                                        {solres.nome}
-                                    </option>
-                                ))}
-                            </Form.Control>
-                        </Form.Group>
-                        <Form.Control.Feedback type="invalid">
-                            Informe o Solicitante
-                        </Form.Control.Feedback>
-                    </Form.Row>
-                    <Form.Row>
-                        <Form.Group as={Col} controlId="responsavel">
-                            <Form.Label>Responsável</Form.Label>
-                            <Form.Control
-                                as="select"
-                                onChange={handleResponsavel}
-                                value={responsavel.nome}
-                            >
-                                {responsaveisAPI.map((responsavel) => (
-                                    <option
-                                        key={responsavel._id}
-                                        name={responsavel._id}
-                                    >
-                                        {" "}
-                                        {responsavel.nome}
-                                    </option>
-                                ))}
-                            </Form.Control>
-                        </Form.Group>
+            </div>
+            <div>
+            <label>Status</label>
+            <select value={status} onChange={(e) => setStatus(e.target.value)}>
+                <option>Desenho</option>
+                <option>Aguardando GMUD</option>
+                <option>Desenvolvimento</option>
+                <option>Homologando</option>
+                <option>Finalizado</option>
+            </select>
 
-                        <Form.Group as={Col} controlId="horas">
-                            <Form.Label>Horas</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Horas"
-                                required
-                                value={horas}
-                                onChange={(e) => setHoras(e.target.value)}
-                            />
-                        </Form.Group>
+            </div>
+            </section>
+            
+            <div>
+            <label>Descrição</label>
+            <textarea rows="4" value={descricao} onChange={(e) => setDescricao(e.target.value)}/>
+            </div>
 
-                        <Form.Group as={Col} controlId="prioridade">
-                            <Form.Label>Prioridade</Form.Label>
-                            <Form.Control
-                                as="select"
-                                value={prioridade}
-                                onChange={(e) => setPrioridade(e.target.value)}
-                            >
-                                <option>Alta</option>
-                                <option>Média</option>
-                                <option>Baixa</option>
-                            </Form.Control>
-                        </Form.Group>
+            <div>
+            <label>Observações</label>
+            <textarea rows="4" value={observacoes} onChange={(e) => setObservacoes(e.target.value)}/>
+            </div>
+            <button className="button" type="submit">Salvar</button>
+  
+            </form>
 
-                        <Form.Group as={Col} controlId="status">
-                            <Form.Label>Status</Form.Label>
-                            <Form.Control
-                                as="select"
-                                value={status}
-                                onChange={(e) => setStatus(e.target.value)}
-                            >
-                                <option>Desenho</option>
-                                <option>Aguardando GMUD</option>
-                                <option>Desenvolvimento</option>
-                                <option>Homologando</option>
-                                <option>Finalizado</option>
-                            </Form.Control>
-                        </Form.Group>
-                    </Form.Row>
-
-                    <Form.Row>
-                        <Form.Group as={Col} controlId="inicio">
-                            <Form.Label>Início</Form.Label>
-                            <Form.Control
-                                type="date"
-                                required
-                                value={inicio}
-                                onChange={(e) => setInicio(e.target.value)}
-                                required
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                Defina a data de início
-                            </Form.Control.Feedback>
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="fim">
-                            <Form.Label>Fim</Form.Label>
-                            <Form.Control
-                                type="date"
-                                value={fim}
-                                onChange={(e) => setFim(e.target.value)}
-                            />
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="prazo">
-                            <Form.Label>Prazo</Form.Label>
-                            <Form.Control
-                                type="date"
-                                placeholder="Prazo"
-                                required
-                                value={prazo}
-                                onChange={(e) => setPrazo(e.target.value)}
-                            />
-                        </Form.Group>
-                    </Form.Row>
-
-                    <Form.Row>
-                        <Form.Group as={Col} controlId="descricao">
-                            <Form.Label>Descrição</Form.Label>
-                            <Form.Control
-                                as="textarea"
-                                rows="5"
-                                value={descricao}
-                                onChange={(e) => setDescricao(e.target.value)}
-                            />
-                        </Form.Group>
-                    </Form.Row>
-
-                    <Form.Row>
-                        <Form.Group as={Col} controlId="observacoes">
-                            <Form.Label>Observações</Form.Label>
-                            <Form.Control
-                                as="textarea"
-                                rows="5"
-                                value={observacoes}
-                                onChange={(e) => setObservacoes(e.target.value)}
-                            />
-                        </Form.Group>
-                    </Form.Row>
-
-                    <Col md={{ span: 6, offset: 3 }}>
-                        <Button type="submit">Salvar</Button>
-                    </Col>
-                    <br></br>
-                </Form>
             </div>
         </>
     );

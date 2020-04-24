@@ -31,6 +31,17 @@ function CadastroProjetos() {
     const [funcionalSelecionado, setFuncionalSelecionado] = useState("");
     const [validated, setValidated] = useState(false);
 
+    function validador(){
+        let arrayvars = [titulo, cliente, status_projeto, pm, funcional, prioridade, inicio]
+        for (let vars in arrayvars){
+            if(vars.length === 0 || vars === undefined){
+                return 0
+            }
+            setValidated(true)
+        }
+    }
+
+
     function trataData(dataRaw) {
         let dataF = new Date(dataRaw).toLocaleDateString("pt-BR");
 
@@ -43,15 +54,13 @@ function CadastroProjetos() {
         );
     }
 
-    async function handleSave(e) {
-        const form = e.currentTarget;
-        if (form.checkValidity() === false) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-        setValidated(true);
+    function handleSave(e) {
         e.preventDefault();
-
+        validador();
+        console.log(validated)
+        if (validated === false) {
+            alert("Preencha corretamente os campos!")            
+        }else{
         const dataSave = {
             _id: _id,
             titulo: titulo,
@@ -68,26 +77,26 @@ function CadastroProjetos() {
         };
         console.log({ datasave: dataSave });
 
-        if (form.checkValidity() !== false) {
-            if (idBusca !== undefined) {
-                await api.post("/projeto/update", dataSave, {
-                    headers: {
-                        Authorization: `Bearer ${sessionStorage.getItem(
-                            "Token"
-                        )}`,
-                    },
-                });
-            } else {
-                await api.post("/projeto/cadastro", dataSave, {
-                    headers: {
-                        Authorization: `Bearer ${sessionStorage.getItem(
-                            "Token"
-                        )}`,
-                    },
-                });
-            }
+        let apipath = '';
+        if (idBusca !== undefined || validated === true) {
+            apipath = '/projeto/update'
+        }else{
+            apipath = '/projeto/cadastro'
+        }
 
-            history.push("/lista-projetos");
+        api.post("/projeto/update", dataSave, {
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem(
+                    "Token"
+                )}`,
+            },
+        }).then(resp => {
+                alert('Projeto Salvo!');
+            }).catch(err => {
+                alert('Ocorreu um erro. Tente novamente!')
+                setValidated(false)
+            });;
+            
         }
     }
 

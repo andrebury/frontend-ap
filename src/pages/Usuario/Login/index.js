@@ -18,7 +18,6 @@ function Login() {
             email: email,
             senha: senha,
         }).then(response =>{
-            alert("Você está logado " + response.data.usuario.nome);
             sessionStorage.setItem("nome", response.data.usuario.nome);
             sessionStorage.setItem("sessionid", response.data.usuario._id);
             sessionStorage.setItem("Token", response.data.token);
