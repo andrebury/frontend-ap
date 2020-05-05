@@ -33,20 +33,23 @@ function Tarefas() {
     const [projetoID, setProjetoID] = useState("");
 
     function validador(){
-        let arrayvars = [titulo, solicitante, inicio, fim, prazo, prioridade, status]
+        let arrayvars = [titulo, solicitante, inicio, prazo, prioridade, status]
+        let ok = true
         for (let vars in arrayvars){
             if(vars.length === 0 || vars === undefined){
-                return 0
+                ok = false
             }
-            setValidated(true)
+            
         }
+        console.log('ok: ' + ok)
+        setValidated(ok)
+        return ok
     }
 
     function handleSubmit(e) {
         e.preventDefault();
-        validador();
-        console.log(validated)
-        if (validated === false) {
+        
+        if (validador() === false) {
             alert("Preencha corretamente os campos!")            
         }else{
         const data = {
@@ -78,6 +81,7 @@ function Tarefas() {
                 },
             }).then(resp => {
                 alert('Tarefa Salva!');
+                history.push(`/tarefas?idBusca=${projetoID}`)
             }).catch(err => {
                 alert('Ocorreu um erro. Tente novamente!')
                 setValidated(false)

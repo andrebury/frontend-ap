@@ -12,7 +12,7 @@ function CadastroProjetos() {
     const [projeto_id, setProjeto_id] = useState("");
     const [funcional, setFuncional] = useState(["Escolha"]);
     const [horas, setHoras] = useState(0);
-    const [prioridade, setPrioridade] = useState(["Escolha a prioridade"]);
+    const [prioridade, setPrioridade] = useState("Média");
     const [prazo, setPrazo] = useState("00/00/0000");
     const [descricao, setDescricao] = useState("");
     const [cliente, setCliente] = useState("");
@@ -32,35 +32,25 @@ function CadastroProjetos() {
     const [validated, setValidated] = useState(false);
 
     function validador(){
-        let arrayvars = [titulo, cliente, status_projeto, pm, funcional, prioridade, inicio]
-        for (let vars in arrayvars){
+        let arrayvars = [titulo, clienteSelecionado, status_projeto, pm, funcionalSelecionado, prioridade, inicio]
+        arrayvars.forEach((vars) => {
+            console.log(vars + ' ' + vars.length + '' + (vars === undefined))
             if(vars.length === 0 || vars === undefined){
-                return 0
+                return false
             }
-            setValidated(true)
-        }
+        })
+        return true
     }
 
-
-    function trataData(dataRaw) {
-        let dataF = new Date(dataRaw).toLocaleDateString("pt-BR");
-
-        return (
-            dataRaw.substr(6, 4) +
-            "-" +
-            dataRaw.substr(3, 2) +
-            "-" +
-            dataRaw.substr(0, 2)
-        );
-    }
 
     function handleSave(e) {
         e.preventDefault();
-        validador();
-        console.log(validated)
+        let validated = validador()
         if (validated === false) {
+            setValidated(false)
             alert("Preencha corretamente os campos!")            
         }else{
+        setValidated(true)
         const dataSave = {
             _id: _id,
             titulo: titulo,
@@ -76,22 +66,29 @@ function CadastroProjetos() {
             observacoes: observacoes,
         };
         console.log({ datasave: dataSave });
-
         let apipath = '';
-        if (idBusca !== undefined || validated === true) {
+        if (_id !== "") {
             apipath = '/projeto/update'
         }else{
             apipath = '/projeto/cadastro'
         }
 
-        api.post("/projeto/update", dataSave, {
+        api.post(apipath, dataSave, {
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem(
                     "Token"
                 )}`,
             },
         }).then(resp => {
-                alert('Projeto Salvo!');
+                
+                console.log(resp)
+                if(_id === ""){
+                    set_id(resp.data.projetos._id)
+                    alert('Projeto Cadastrado!');
+                }else {
+                    alert('Projeto Salvo!');
+                }
+
             }).catch(err => {
                 alert('Ocorreu um erro. Tente novamente!')
                 setValidated(false)
@@ -174,9 +171,7 @@ function CadastroProjetos() {
                     })
                     .then((response) => {
                         setTitulo(response.data.projetos.titulo);
-                        setStatus_projeto(
-                            response.data.projetos.status_projeto
-                        );
+                        setStatus_projeto(response.data.projetos.status_projeto);
                         setCliente(response.data.projetos.cliente);
                         setFuncional(response.data.projetos.funcional);
                         setHoras(response.data.projetos.horas);
