@@ -1,36 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./styles.css";
 import api from "../../../services/api";
 import { IoMdAdd } from "react-icons/io";
 
 function ListaProjetos() {
-    const history = useHistory();
 
     const [projetos, setProjetos] = useState([{}]);
 
-    function trataData(dataRaw) {
+        function trataData(dataRaw) {
         if (dataRaw) {
             return (
                 dataRaw.substr(8, 2) +
-                "-" +
+                "/" +
                 dataRaw.substr(5, 2) +
-                "-" +
+                "/" +
                 dataRaw.substr(0, 4)
             );
         } else {
             return "00/00/0000";
         }
-    }
-
-    function handleEntrar(id) {
-        if (id !== undefined) {
-            history.push(`/cadastro-projeto?idBusca=${id}`);
-        }
-    }
-
-    function handleCadastrar() {
-        history.push("/cadastro-projeto");
     }
 
     useEffect(() => {
@@ -55,7 +44,7 @@ function ListaProjetos() {
             
             <h1>
                 Lista de Projetos{" "}
-                <Link onClick={handleEntrar}>
+                <Link to={'/cadastro-projeto'}>
                     <IoMdAdd color="#4983ee" />
                 </Link>
             </h1>
@@ -84,7 +73,7 @@ function ListaProjetos() {
                             </td>
                             <td>
                                 <Link
-                                    to={`/cadastro-projeto?idBusca=${projeto._id}`}
+                                    to={`/projeto/${projeto._id}`}
                                 >
                                     {projeto.titulo}
                                 </Link>

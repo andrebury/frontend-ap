@@ -9,7 +9,7 @@ import './styles.css'
 import api from "../../../services/api";
 import { stat } from "fs";
 
-function Tarefas() {
+function Tarefas({match}) {
     const history = useHistory();
 
     const [titulo, setTitulo] = useState("");
@@ -32,26 +32,9 @@ function Tarefas() {
     const [validated, setValidated] = useState(false);
     const [projetoID, setProjetoID] = useState("");
 
-    function validador(){
-        let arrayvars = [titulo, solicitante, inicio, prazo, prioridade, status]
-        let ok = true
-        for (let vars in arrayvars){
-            if(vars.length === 0 || vars === undefined){
-                ok = false
-            }
-            
-        }
-        console.log('ok: ' + ok)
-        setValidated(ok)
-        return ok
-    }
 
     function handleSubmit(e) {
-        e.preventDefault();
-        
-        if (validador() === false) {
-            alert("Preencha corretamente os campos!")            
-        }else{
+        e.preventDefault();        
         const data = {
             _id,
             titulo,
@@ -67,13 +50,8 @@ function Tarefas() {
             prioridade,
             observacoes,
         };
-        let apipath = '';
-        if (querystring.parse(window.location.search).idBusca !== undefined || validated === true) {
-            apipath = '/tarefa/update'
-        }else{
-            apipath = '/tarefa/cadastro'
-        }
-            api.post(apipath, data, {
+
+            api.post(match.params.tarefa_id !== undefined ?'/tarefa/update' : '/tarefa/cadastro', data, {
                 headers: {
                     Authorization: `Bearer ${sessionStorage.getItem(
                         "Token"
@@ -81,14 +59,12 @@ function Tarefas() {
                 },
             }).then(resp => {
                 alert('Tarefa Salva!');
-                history.push(`/tarefas?idBusca=${projetoID}`)
+                history.push(`/tarefas/${projetoID}`)
             }).catch(err => {
                 alert('Ocorreu um erro. Tente novamente!')
-                setValidated(false)
-            });
-        
+            });        
     }
-}
+
 
     function handleResponsavel(e) {
         const dID = responsaveisAPI.filter(
@@ -134,7 +110,7 @@ function Tarefas() {
                     setSolicitante(sessionStorage.getItem("nome"));
                 });
 
-            const idBusca = querystring.parse(window.location.search).idBusca;
+            const idBusca = match.params.tarefa_id
 
             if (idBusca) {
                 const tarefaInfo = await api.get("/tarefa/id/" + idBusca, {
@@ -144,6 +120,7 @@ function Tarefas() {
                         )}`,
                     },
                 });
+                console.log(tarefaInfo.data)
                 setTarefa_id(tarefaInfo.data.tarefas.tarefa_id);
                 setNomeProjeto(tarefaInfo.data.tarefas.projeto.titulo);
                 setTitulo(tarefaInfo.data.tarefas.titulo);
@@ -166,7 +143,7 @@ function Tarefas() {
                 await api
                     .get(
                         `/projeto/id/${
-                            querystring.parse(window.location.search).idProjeto
+                            match.params.projeto_id
                         }`,
                         {
                             headers: {
@@ -187,9 +164,9 @@ function Tarefas() {
 
     function Titulo() {
         if (tarefa_id) {
-            return <h1> <Link to={`/tarefas?idBusca=${projetoID}`}> <MdKeyboardBackspace color="#4983ee"/> </Link>{" "}Atualizar Tarefa {titulo}</h1>
+            return <h1> <Link to={`/tarefas/${projetoID}`}> <MdKeyboardBackspace color="#4983ee"/> </Link>{" "}Atualizar Tarefa {titulo}</h1>
         } else {
-            return <h1><Link to={`/tarefas?idBusca=${projetoID}`}><MdKeyboardBackspace color="#4983ee" /></Link>{" "}Cadastro Tarefa</h1>
+            return <h1><Link to={`/tarefas/${projetoID}`}><MdKeyboardBackspace color="#4983ee" /></Link>{" "}Cadastro Tarefa</h1>
         }
     }
 
@@ -202,7 +179,7 @@ function Tarefas() {
             <section className="primeiro">
             <div>
             <label>Título</label>
-            <input type="text" value={titulo} onChange={(e) => setTitulo(e.target.value)}/>
+            <input required type="text" value={titulo} onChange={(e) => setTitulo(e.target.value)}/>
              </div>
              <div>
              <label>Projeto</label>
@@ -211,7 +188,7 @@ function Tarefas() {
             <div>
             <label>Solicitante</label>
 
-            <select value={solicitante} onChange={handleSolicitante}>
+            <select required value={solicitante} onChange={handleSolicitante}>
             {responsaveisAPI.map((solres) => (
                 <option key={solres._id} name={solres._id}>
                     {" "}
@@ -223,7 +200,7 @@ function Tarefas() {
             </div>
             <div>
             <label>Responsável</label>
-            <select onChange={handleResponsavel} value={responsavel.nome}>
+            <select required onChange={handleResponsavel} value={responsavel.nome}>
             {responsaveisAPI.map((responsavel) => (
                 <option
                     key={responsavel._id}
@@ -245,7 +222,7 @@ function Tarefas() {
             </div>
             <div>
             <label>Início</label>
-            <input type="date" value={inicio} onChange={(e) => setInicio(e.target.value)}/>
+            <input required type="date" value={inicio} onChange={(e) => setInicio(e.target.value)}/>
             </div>
             <div>
             <label>Fim</label>
@@ -253,11 +230,11 @@ function Tarefas() {
             </div>
             <div>
             <label>Prazo</label>
-            <input type="date" value={prazo} onChange={(e) => setPrazo(e.target.value)}/>
+            <input required type="date" value={prazo} onChange={(e) => setPrazo(e.target.value)}/>
             </div>
                 <div>
             <label>Prioridade</label>
-            <select value={prioridade} onChange={(e) => setPrioridade(e.target.value)}>
+            <select required value={prioridade} onChange={(e) => setPrioridade(e.target.value)}>
                 <option>Alta</option>
                 <option>Média</option>
                 <option>Baixa</option>
@@ -266,7 +243,7 @@ function Tarefas() {
             </div>
             <div>
             <label>Status</label>
-            <select value={status} onChange={(e) => setStatus(e.target.value)}>
+            <select required value={status} onChange={(e) => setStatus(e.target.value)}>
                 <option>Desenho</option>
                 <option>Aguardando GMUD</option>
                 <option>Desenvolvimento</option>
