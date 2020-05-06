@@ -7,7 +7,7 @@ import './styles.css'
 
 import api from "../../../services/api";
 
-function Tarefas() {
+function Tarefas({match}) {
     const history = useHistory();
 
     const [show, setShow] = useState(false);
@@ -15,6 +15,20 @@ function Tarefas() {
     const [observacoes, setObservacoes] = useState("");
     const [idSelecionado, setIdSelecionado] = useState("");
     const [idProjeto, setIdProjeto] = useState("");
+
+    function trataData(dataRaw) {
+        if (dataRaw) {
+            return (
+                dataRaw.substr(8, 2) +
+                "/" +
+                dataRaw.substr(5, 2) +
+                "/" +
+                dataRaw.substr(0, 4)
+            );
+        } else {
+            return "00/00/0000";
+        }
+    }
 
     const handleClose = () => setShow(false);
 
@@ -99,14 +113,12 @@ function Tarefas() {
 
     useEffect(() => {
         async function carregaTarefas() {
-            const idBusca = querystring.parse(window.location.search).idBusca;
+            const idBusca = match.params.projeto_id
+
             if (!idBusca) {
                 history.push("/lista-projetos");
             }
             setIdProjeto(idBusca);
-            console.log(
-                "idBusca: " + querystring.parse(window.location.search).idBusca
-            );
 
             const response = await api.post(
                 "/tarefa/info",
@@ -132,7 +144,7 @@ function Tarefas() {
 
             <h1>
                 Tarefas{" "}
-                <Link to={`/cadastro-tarefa?idProjeto=${idProjeto}`} >
+                <Link to={`/cadastro-tarefa/${idProjeto}`} >
                     <IoMdAdd color="#4983ee" />
                 </Link>
             </h1>
@@ -156,7 +168,7 @@ function Tarefas() {
                             <td>{tarefa.tarefa_id}</td>
                             <td>
                                 <Link
-                                    to={`/cadastro-tarefa?idBusca=${tarefa._id}`}
+                                    to={`/tarefa/${idProjeto}/${tarefa._id}`}
                                 >
                                     {tarefa.titulo}{" "}
                                 </Link>

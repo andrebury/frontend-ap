@@ -38,12 +38,13 @@ const Routes = () => {
 
                 <PrivateRoute path="/cadastro-projeto" component={CadastroProjetos} />
                 <PrivateRoute path="/lista-projetos" component={ListaProjetos} />
-                <PrivateRoute path="/projetos/:projeto_id" component={ListaProjetos} />
+                <PrivateRoute path="/projeto/:projeto_id" component={CadastroProjetos} />
 
 
-                <PrivateRoute path="/tarefas" component={Tarefas} />
-                <Route path="/cadastro-tarefa" component={CadastroTarefa} />
-
+                <PrivateRoute path="/tarefas/:projeto_id" component={Tarefas} />
+                <Route path="/cadastro-tarefa/:projeto_id" component={CadastroTarefa} />
+                <Route path="/tarefa/:projeto_id/:tarefa_id" component={CadastroTarefa} />
+                
                 <PrivateRoute path="/home" component={Inicio} />
             </Switch>
         

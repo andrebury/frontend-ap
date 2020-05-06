@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import querystring from "query-string";
 import './styles.css'
 import api from "../../../services/api";
 
-function CadastroProjetos() {
+function CadastroProjetos({match}) {
     const history = useHistory();
 
     const [clientes, setClientes] = useState(["Escolha"]);
@@ -22,7 +22,7 @@ function CadastroProjetos() {
 
     const [inicio, setInicio] = useState("00/00/0000");
     const [pm, setPm] = useState("");
-    const [status_projeto, setStatus_projeto] = useState("");
+    const [status_projeto, setStatus_projeto] = useState("Aprovado");
     const [observacoes, setObservacoes] = useState("");
     const [_id, set_id] = useState("");
     const [idBusca, setIdBusca] = useState("");
@@ -31,26 +31,11 @@ function CadastroProjetos() {
     const [funcionalSelecionado, setFuncionalSelecionado] = useState("");
     const [validated, setValidated] = useState(false);
 
-    function validador(){
-        let arrayvars = [titulo, clienteSelecionado, status_projeto, pm, funcionalSelecionado, prioridade, inicio]
-        arrayvars.forEach((vars) => {
-            console.log(vars + ' ' + vars.length + '' + (vars === undefined))
-            if(vars.length === 0 || vars === undefined){
-                return false
-            }
-        })
-        return true
-    }
 
 
     function handleSave(e) {
+        console.log(e)
         e.preventDefault();
-        let validated = validador()
-        if (validated === false) {
-            setValidated(false)
-            alert("Preencha corretamente os campos!")            
-        }else{
-        setValidated(true)
         const dataSave = {
             _id: _id,
             titulo: titulo,
@@ -65,41 +50,21 @@ function CadastroProjetos() {
             pm: pmSelecionado,
             observacoes: observacoes,
         };
-        console.log({ datasave: dataSave });
-        let apipath = '';
-        if (_id !== "") {
-            apipath = '/projeto/update'
-        }else{
-            apipath = '/projeto/cadastro'
-        }
 
-        api.post(apipath, dataSave, {
+        api.post(match.params.projeto_id ? '/projeto/update': '/projeto/cadastro', dataSave, {
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem(
                     "Token"
                 )}`,
             },
         }).then(resp => {
-                
-                console.log(resp)
-                if(_id === ""){
-                    set_id(resp.data.projetos._id)
-                    alert('Projeto Cadastrado!');
-                }else {
-                    alert('Projeto Salvo!');
-                }
-
-            }).catch(err => {
+                alert('Projeto Salvo!')
+                history.push('/lista-projetos')
+            }).catch(err => (
                 alert('Ocorreu um erro. Tente novamente!')
-                setValidated(false)
-            });;
-            
-        }
+            ));            
     }
-
-    async function HandleTarefa(e) {
-        history.push(`/tarefas?idBusca=${idBusca}`);
-    }
+    
 
     useEffect(() => {
         async function loadInfo() {
@@ -152,17 +117,16 @@ function CadastroProjetos() {
                     setPm(papi[0] !== undefined ? papi[0].nome : "");
 
                     setFuncionalSelecionado(
-                        fapi[0] !== undefined ? fapi[0]._id : ""
-                    );
+                        fapi[0] !== undefined ? fapi[0]._id : "");
                     setFuncional(fapi[0] !== undefined ? fapi[0].nome : "");
                 });
 
-            const idBusca = querystring.parse(window.location.search).idBusca;
-            setIdBusca(idBusca);
+            const projeto_id = match.params.projeto_id
+            setIdBusca(projeto_id);
 
-            if (idBusca) {
+            if (projeto_id) {
                 await api
-                    .get(`/projeto/id/${idBusca}`, {
+                    .get(`/projeto/id/${projeto_id}`, {
                         headers: {
                             Authorization: `Bearer ${sessionStorage.getItem(
                                 "Token"
@@ -262,6 +226,11 @@ function CadastroProjetos() {
         setFuncionalSelecionado(fID[0]._id);
     }
 
+
+    async function HandleTarefa(e) {
+        history.push(`/tarefas/${idBusca}`);
+    }
+
     return (
         <>
                 <Titulo />
@@ -271,7 +240,7 @@ function CadastroProjetos() {
                     <section className="primeiro">
                     <div className="titulo">
                     <label>Título</label>
-                    <input type="text" maxLength="60" placeholder="Título do Projeto" value={titulo} onChange={(e) => setTitulo(e.target.value)}/>
+                    <input required type="text" maxLength="60" placeholder="Título do Projeto" value={titulo} onChange={(e) => setTitulo(e.target.value)}/>
                     </div>
                     <div className="cliente">
                     <label>Cliente</label>
@@ -289,7 +258,7 @@ function CadastroProjetos() {
                     </div>
                     <div className="status">
                     <label>Status</label>
-                    <select value={status_projeto} onChange={(e) => setStatus_projeto(e.target.value)}>
+                    <select required value={status_projeto} onChange={(e) => setStatus_projeto(e.target.value)}>
                         <option>Aprovado</option>
                         <option>Desenho</option>
                         <option>Desenvolvimento</option>
@@ -303,7 +272,7 @@ function CadastroProjetos() {
                     <section className="segundo">
                     <div className="pm">
                     <label>PM</label>
-                        <select onChange={HandlePm} value={pm.nome}>
+                        <select required onChange={HandlePm} value={pm.nome}>
                                 {pmsAPI.map((pm) => (
                                     <option key={pm._id} name={pm._id}>
                                         {" "}
@@ -314,7 +283,7 @@ function CadastroProjetos() {
                         </div>
                         <div className="funcional">
                         <label>Funcional</label>
-                        <select onChange={(e) => handleFuncional(e)} value={funcional.nome}>
+                        <select required onChange={(e) => handleFuncional(e)} value={funcional.nome}>
                             {funcsAPI.map((func) => (
                                 <option key={func._id} name={func._id}>
                                     {" "}
@@ -325,7 +294,7 @@ function CadastroProjetos() {
                         </div>
                         <div className="prioridade">
                         <label>Prioridade</label>
-                        <select value={prioridade} onChange={(e) => setPrioridade(e.target.value)}>
+                        <select required value={prioridade} onChange={(e) => setPrioridade(e.target.value)}>
                             <option>Alta</option>
                             <option>Média</option>
                             <option>Baixa</option>
@@ -340,11 +309,11 @@ function CadastroProjetos() {
                         </div>
                         <div className="inicio">
                         <label>Início</label>
-                        <input type="date" value={inicio} onChange={(e) => setInicio(e.target.value)}/>
+                        <input required type="date" value={inicio} onChange={(e) => setInicio(e.target.value)} />
                         </div>
                         <div className="prazo">
                         <label>Prazo</label>
-                        <input type="date" value={prazo} onChange={(e) => setPrazo(e.target.value)}/>
+                        <input required type="date" value={prazo} onChange={(e) => setPrazo(e.target.value)}/>
                         </div>
                     </section>
                     <div className="descricao">
