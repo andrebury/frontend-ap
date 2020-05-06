@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import querystring from "query-string";
+import { useHistory } from "react-router-dom";
 import './styles.css'
 import api from "../../../services/api";
 
@@ -29,9 +28,6 @@ function CadastroProjetos({match}) {
     const [clienteSelecionado, setClienteSelecionado] = useState("");
     const [pmSelecionado, setPmSelecionado] = useState("");
     const [funcionalSelecionado, setFuncionalSelecionado] = useState("");
-    const [validated, setValidated] = useState(false);
-
-
 
     function handleSave(e) {
         console.log(e)

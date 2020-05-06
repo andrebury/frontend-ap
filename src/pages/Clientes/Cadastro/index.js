@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Form, option, Button, Col } from "react-bootstrap";
+import { Form, Button, Col } from "react-bootstrap";
 import api from "../../../services/api";
 import querystring from "query-string";
 

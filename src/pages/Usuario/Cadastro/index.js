@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Form, option, Button, Col } from "react-bootstrap";
 
 import api from "../../../services/api";
 import "./styles.css";

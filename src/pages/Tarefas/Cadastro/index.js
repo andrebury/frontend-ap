@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useHistory , Link} from "react-router-dom";
 
-import querystring from "query-string";
 import {MdKeyboardBackspace} from 'react-icons/md';
 
 import './styles.css'
 
 import api from "../../../services/api";
-import { stat } from "fs";
 
 function Tarefas({match}) {
     const history = useHistory();
@@ -29,7 +27,6 @@ function Tarefas({match}) {
     const [responsavelSelecionado, setResponsavelSelecionado] = useState("");
     const [solicitanteSelecionado, setSolicitanteSelecionado] = useState("");
     const [responsaveisAPI, setResponsaveisAPI] = useState(["Escolha..."]);
-    const [validated, setValidated] = useState(false);
     const [projetoID, setProjetoID] = useState("");
 
 

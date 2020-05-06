@@ -8,23 +8,9 @@ function ListaProjetos() {
 
     const [projetos, setProjetos] = useState([{}]);
 
-        function trataData(dataRaw) {
-        if (dataRaw) {
-            return (
-                dataRaw.substr(8, 2) +
-                "/" +
-                dataRaw.substr(5, 2) +
-                "/" +
-                dataRaw.substr(0, 4)
-            );
-        } else {
-            return "00/00/0000";
-        }
-    }
-
     useEffect(() => {
         async function carrageProjetos() {
-            const response = await api
+            await api
                 .get("/projeto/info", {
                     headers: {
                         Authorization: `Bearer ${sessionStorage.getItem(
