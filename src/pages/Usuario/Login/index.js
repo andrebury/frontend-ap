@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./styles.css";
 import api from "../../../services/api";
 import ehAutenticado from "../../../services/auth";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { useHistory, Link } from "react-router-dom";
 import { FiLogIn } from "react-icons/fi";
 
@@ -14,7 +13,7 @@ function Login() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        const response = api.post("/usuario//authenticate", {
+        api.post("/usuario//authenticate", {
             email: email,
             senha: senha,
         }).then(response =>{
@@ -27,10 +26,6 @@ function Login() {
         }).catch(error => {
             alert("Usuário ou senha Inválidos");
         })
-    }
-
-    function handleCadastro(e) {
-        history.push("/cadastro-usuario");
     }
 
     useEffect(() => {

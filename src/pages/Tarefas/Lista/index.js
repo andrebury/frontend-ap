@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {  Button, Modal, Form } from "react-bootstrap";
 import { useHistory, Link } from "react-router-dom";
-import querystring from "query-string";
 import { IoMdAdd } from "react-icons/io";
 import './styles.css'
 
@@ -15,20 +14,6 @@ function Tarefas({match}) {
     const [observacoes, setObservacoes] = useState("");
     const [idSelecionado, setIdSelecionado] = useState("");
     const [idProjeto, setIdProjeto] = useState("");
-
-    function trataData(dataRaw) {
-        if (dataRaw) {
-            return (
-                dataRaw.substr(8, 2) +
-                "/" +
-                dataRaw.substr(5, 2) +
-                "/" +
-                dataRaw.substr(0, 4)
-            );
-        } else {
-            return "00/00/0000";
-        }
-    }
 
     const handleClose = () => setShow(false);
 
@@ -93,23 +78,6 @@ function Tarefas({match}) {
         );
     }
 
-    function trataData(dataRaw) {
-        const dataF = new Date(dataRaw);
-        return dataF.toLocaleDateString("pt-BR");
-    }
-
-    function handleEntrar(idaTar) {
-        console.log("idBusca: " + idProjeto);
-        console.log("idaTar: " + idaTar);
-
-        if (idaTar.length > 10) {
-            history.push(
-                `/cadastro-tarefa?idBusca=${idaTar}&idProjeto=${idProjeto}`
-            );
-        } else {
-            history.push(`/cadastro-tarefa?idProjeto=${idProjeto}`);
-        }
-    }
 
     useEffect(() => {
         async function carregaTarefas() {
