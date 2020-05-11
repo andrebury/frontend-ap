@@ -5,6 +5,16 @@ import "./styles.css";
 import { Table, Button, Modal, Form } from "react-bootstrap";
 import api from "../../services/api";
 import "react-calendar/dist/Calendar.css";
+import { 
+  parseISO, 
+  format, 
+  formatRelative, 
+  formatDistance,
+} from 'date-fns';
+
+import {orderBy} from 'lodash';
+
+//import pt from 'date-fns/locales/pt';
 
 function Inicio() {
     const history = useHistory();
@@ -27,10 +37,19 @@ function Inicio() {
     const [agenda, setAgenda] = useState(new Date());
     const [alertas, setAlertas] = useState([]);
 
-    function trataData(dataRaw) {
-        const dataF = new Date(dataRaw);
-        return dataF.toLocaleDateString("pt-BR");
-    }
+    // //formatação de data para o Picker
+    // const formattedDate = (data = new Date()) => {
+    //     // data.setDate(data.getDate() + 1)
+    //     // const d = data.getDate()
+    //     // const m = data.getMonth()
+    //     // const a = data.getFullYear()
+
+    //     return data.toLocaleString("en-US")
+    // }
+    
+        //formatação de data para a tabela
+
+
     function calendarioOnClick(e) {
         console.log(e);
         setAgenda(e.target);
@@ -44,19 +63,6 @@ function Inicio() {
                 setObservacoes(tarefa.observacoes);
             }
         });
-    }
-
-    function handleEntrar(idaTar, projetoid) {
-        console.log("idBusca2: " + projetoid);
-        console.log("idaTar: " + idaTar);
-
-        if (idaTar.length > 10) {
-            history.push(
-                `/cadastro-tarefa?idBusca=${idaTar}&idProjeto=${projetoid}`
-            );
-        } else {
-            history.push(`/cadastro-tarefa?idProjeto=${projetoid}`);
-        }
     }
 
     const handleClose = () => setShow(false);
@@ -134,10 +140,9 @@ function Inicio() {
                     },
                 }
             );
+            setTarefas(orderBy(response.data.tarefas, ['prazo'], ['asc']));
 
-            setTarefas(response.data.tarefas);
 
-            response.data.tarefas.map((tarefa) => console.log(tarefa._id));
         }
         carrageTarefas();
     }, []);
@@ -150,7 +155,6 @@ function Inicio() {
                     <table id="tarefas">
                         <thead>
                             <tr>
-                                <th>#</th>
                                 <th>Título</th>
                                 <th>Projeto</th>
                                 <th>Prazo</th>
@@ -160,10 +164,9 @@ function Inicio() {
                         <tbody>
                             {tarefas.map((tarefa) => (
                                 <tr key={tarefa._id}>
-                                    <td>{tarefa.tarefa_id}</td>
                                     <td>
                                         <Link
-                                            to={`/cadastro-tarefa?idBusca=${tarefa._id}`}
+                                            to={`/tarefa/${tarefa.projeto._id}/${tarefa._id}`}
                                         >
                                             {tarefa.titulo}
                                         </Link>

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./styles.css";
 import api from "../../../services/api";
 import { IoMdAdd } from "react-icons/io";
+import {orderBy} from 'lodash';
 
 function ListaProjetos() {
 
@@ -19,7 +20,7 @@ function ListaProjetos() {
                     },
                 })
                 .then((response) => {
-                    setProjetos(response.data.projetos);
+                    setProjetos(orderBy(response.data.projetos,['prazo'],['asc']))
                 });
         }
         carrageProjetos();
@@ -38,7 +39,6 @@ function ListaProjetos() {
             <table id="projetos">
                 <thead>
                     <tr>
-                        <th>#</th>
                         <th>Cliente</th>
                         <th>Título</th>
                         <th>PM</th>
@@ -50,7 +50,6 @@ function ListaProjetos() {
                 <tbody>
                     {projetos.map((projeto) => (
                         <tr key={projeto._id}>
-                            <td>{projeto.projeto_id}</td>
                             <td>
                                 {projeto.cliente === undefined ||
                                 projeto.cliente === null

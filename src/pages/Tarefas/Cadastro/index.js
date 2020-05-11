@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useHistory , Link} from "react-router-dom";
 
 import {MdKeyboardBackspace} from 'react-icons/md';
-
 import './styles.css'
 
 import api from "../../../services/api";
@@ -28,6 +27,24 @@ function Tarefas({match}) {
     const [solicitanteSelecionado, setSolicitanteSelecionado] = useState("");
     const [responsaveisAPI, setResponsaveisAPI] = useState(["Escolha..."]);
     const [projetoID, setProjetoID] = useState("");
+
+    const formattedDateToPicker = (data) => {
+        if(data === "" | data === null | data === NaN | data === undefined){
+            return ""
+        }else {
+            console.log(data)
+            return data.substr(6,4) + '-' + data.substr(3,2) + '-' +  data.substr(0,2)
+        }
+        
+    }
+
+    const formattedDateToDB = (data) => {
+        let dt = data === null ? new Date() : new Date(data)
+
+        dt.setDate(dt.getDate() + 1)
+
+        return dt.toLocaleDateString("pt-BR")        
+    }
 
 
     function handleSubmit(e) {
@@ -219,15 +236,15 @@ function Tarefas({match}) {
             </div>
             <div>
             <label>Início</label>
-            <input required type="date" value={inicio} onChange={(e) => setInicio(e.target.value)}/>
+            <input required type="date" value={formattedDateToPicker(inicio)} onChange={(e) => setInicio(formattedDateToDB(e.target.value))}/>
             </div>
             <div>
             <label>Fim</label>
-            <input type="date" value={fim} onChange={(e) => setFim(e.target.value)}/>
+            <input type="date" value={formattedDateToPicker(fim)} onChange={(e) => setFim(formattedDateToDB(e.target.value))}/>
             </div>
             <div>
             <label>Prazo</label>
-            <input required type="date" value={prazo} onChange={(e) => setPrazo(e.target.value)}/>
+            <input required type="date" value={formattedDateToPicker(prazo)} onChange={(e) => setPrazo(formattedDateToDB(e.target.value))}/>
             </div>
                 <div>
             <label>Prioridade</label>

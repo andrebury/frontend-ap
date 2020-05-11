@@ -42,7 +42,6 @@ function Clientes() {
             <table id="clientes">
                 <thead>
                     <tr>
-                        <th>#</th>
                         <th>Nome</th>
                         <th>Ramo</th>
                         <th>Solicitantes</th>
@@ -51,7 +50,6 @@ function Clientes() {
                 <tbody>
                     {clientes.map((cliente) => (
                         <tr key={cliente._id}>
-                            <td>{cliente.cliente_id}</td>
                             <td>
                                 <Link
                                     to={`/cadastro-cliente?idCliente=${cliente._id}`}

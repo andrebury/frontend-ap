@@ -29,6 +29,26 @@ function CadastroProjetos({match}) {
     const [pmSelecionado, setPmSelecionado] = useState("");
     const [funcionalSelecionado, setFuncionalSelecionado] = useState("");
 
+      const formattedDateToPicker = (data) => {
+        if(data === "" | data === null | data === NaN | data === undefined ){
+            return ""
+        }else {
+            
+            return data.substr(6,4) + '-' + data.substr(3,2) + '-' +  data.substr(0,2)
+        }
+        
+    }
+
+
+    const formattedDateToDB = (data) => {
+        let dt = data === null ? new Date() : new Date(data)
+
+        dt.setDate(dt.getDate() + 1)
+
+        return dt.toLocaleDateString("pt-BR")        
+    }
+
+
     function handleSave(e) {
         console.log(e)
         e.preventDefault();
@@ -305,11 +325,11 @@ function CadastroProjetos({match}) {
                         </div>
                         <div className="inicio">
                         <label>Início</label>
-                        <input required type="date" value={inicio} onChange={(e) => setInicio(e.target.value)} />
+                        <input required type="date" value={formattedDateToPicker(inicio)} onChange={(e) => setInicio(formattedDateToDB(e.target.value))} />
                         </div>
                         <div className="prazo">
                         <label>Prazo</label>
-                        <input required type="date" value={prazo} onChange={(e) => setPrazo(e.target.value)}/>
+                        <input required type="date" value={formattedDateToPicker(prazo)} onChange={(e) => setPrazo(formattedDateToDB(e.target.value))}/>
                         </div>
                     </section>
                     <div className="descricao">

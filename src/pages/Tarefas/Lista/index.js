@@ -3,7 +3,7 @@ import {  Button, Modal, Form } from "react-bootstrap";
 import { useHistory, Link } from "react-router-dom";
 import { IoMdAdd } from "react-icons/io";
 import './styles.css'
-
+import {orderBy} from 'lodash';
 import api from "../../../services/api";
 
 function Tarefas({match}) {
@@ -100,7 +100,7 @@ function Tarefas({match}) {
                 }
             );
 
-            setTarefas(response.data.tarefas);
+            setTarefas(orderBy(response.data.tarefas,['prazo'],['asc']));
             console.log(response.data.tarefas);
             setObservacoes(response.data.tarefas.observacoes);
         }
@@ -120,11 +120,11 @@ function Tarefas({match}) {
             <table id="lista-tarefas">
                 <thead>
                     <tr>
-                        <th>#</th>
                         <th>Título</th>
                         <th>Projeto</th>
                         <th>Desenvolvedor</th>
                         <th>Início</th>
+                        <th>Prazo</th>
                         <th>Status</th>
                         <th>Prioridade</th>
                         <th>Observações</th>
@@ -133,7 +133,6 @@ function Tarefas({match}) {
                 <tbody>
                     {tarefas.map((tarefa) => (
                         <tr key={tarefa._id}>
-                            <td>{tarefa.tarefa_id}</td>
                             <td>
                                 <Link
                                     to={`/tarefa/${idProjeto}/${tarefa._id}`}
@@ -148,6 +147,7 @@ function Tarefas({match}) {
                             </td>
                             <td>{tarefa.desenvolvedor.nome}</td>
                             <td>{tarefa.inicio}</td>
+                            <td>{tarefa.prazo}</td>
                             <td>{tarefa.status}</td>
                             <td>{tarefa.prioridade}</td>
                             <td>
