@@ -37,21 +37,9 @@ function Inicio() {
     const [agenda, setAgenda] = useState(new Date());
     const [alertas, setAlertas] = useState([]);
 
-    // //formatação de data para o Picker
-    // const formattedDate = (data = new Date()) => {
-    //     // data.setDate(data.getDate() + 1)
-    //     // const d = data.getDate()
-    //     // const m = data.getMonth()
-    //     // const a = data.getFullYear()
-
-    //     return data.toLocaleString("en-US")
-    // }
-    
-        //formatação de data para a tabela
-
 
     function calendarioOnClick(e) {
-        console.log(e);
+        //console.log(e);
         setAgenda(e.target);
     }
 
@@ -140,6 +128,7 @@ function Inicio() {
                     },
                 }
             );
+            console.log(response.data.tarefas)
             setTarefas(orderBy(response.data.tarefas, ['prazo'], ['asc']));
 
 
@@ -158,6 +147,8 @@ function Inicio() {
                                 <th>Título</th>
                                 <th>Projeto</th>
                                 <th>Prazo</th>
+                                <th>Solicitante</th>
+                                <th>Status</th>
                                 <th>Observações</th>
                             </tr>
                         </thead>
@@ -171,8 +162,10 @@ function Inicio() {
                                             {tarefa.titulo}
                                         </Link>
                                     </td>
-                                    <td>{tarefa.projeto.titulo}</td>
+                                    <td style={{width: 280 }}>{tarefa.projeto.titulo}</td>
                                     <td>{tarefa.prazo}</td>
+                                    <td style={{width: 180 }}>{tarefa.solicitante !== undefined ? tarefa.solicitante.nome : ""}</td>
+                                    <td>{tarefa.status}</td>
                                     <td>
                                         <Link
                                             name={tarefa._id}
