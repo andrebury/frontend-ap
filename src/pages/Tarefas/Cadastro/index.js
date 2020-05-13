@@ -32,7 +32,6 @@ function Tarefas({match}) {
         if(data === "" | data === null | data === NaN | data === undefined){
             return ""
         }else {
-            console.log(data)
             return data.substr(6,4) + '-' + data.substr(3,2) + '-' +  data.substr(0,2)
         }
         
@@ -81,21 +80,13 @@ function Tarefas({match}) {
 
 
     function handleResponsavel(e) {
-        const dID = responsaveisAPI.filter(
-            (d) => d.nome.toLowerCase() === e.target.value.toLowerCase()
-        );
-
         setResponsavel(e.target.value);
-        setResponsavelSelecionado(dID[0]._id);
+        setResponsavelSelecionado(e.target.selectedOptions[0].id);
     }
 
     function handleSolicitante(e) {
-        const dID = responsaveisAPI.filter(
-            (d) => d.nome.toLowerCase() === e.target.value.toLowerCase()
-        );
-
         setSolicitante(e.target.value);
-        setSolicitanteSelecionado(dID[0]._id);
+        setSolicitanteSelecionado(e.target.selectedOptions[0].id);
     }
 
     useEffect(() => {
@@ -204,9 +195,8 @@ function Tarefas({match}) {
 
             <select required value={solicitante} onChange={handleSolicitante}>
             {responsaveisAPI.map((solres) => (
-                <option key={solres._id} name={solres._id}>
-                    {" "}
-                    {solres.nome}
+                <option key={solres._id} name={solres._id} id={solres._id}>
+                    {" "}{solres.nome}
                 </option>
             ))}
             
@@ -216,12 +206,8 @@ function Tarefas({match}) {
             <label>Responsável</label>
             <select required onChange={handleResponsavel} value={responsavel.nome}>
             {responsaveisAPI.map((responsavel) => (
-                <option
-                    key={responsavel._id}
-                    name={responsavel._id}
-                >
-                    {" "}
-                    {responsavel.nome}
+                <option key={responsavel._id} name={responsavel._id} id={responsavel._id}>
+                    {" "}{responsavel.nome}
                 </option>
             ))}
             </select>

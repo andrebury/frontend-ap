@@ -212,35 +212,35 @@ function CadastroProjetos({match}) {
         }
     }
 
-    function HandleCliente(e) {
-        const cID = clientes.filter(
-            (c) => c.nome.toLowerCase() === e.target.value.toLowerCase()
-        );
-        console.log(cID[0]._id);
 
+
+
+
+
+
+
+
+    function HandleCliente(e) {       
         setCliente(e.target.value);
-        setClienteSelecionado(cID[0]._id);
+        setClienteSelecionado(e.target.selectedOptions[0].id);
     }
 
     function HandlePm(e) {
-        const pID = pmsAPI.filter(
-            (p) => p.nome.toLowerCase() === e.target.value.toLowerCase()
-        );
-        console.log(pID[0]._id);
-
         setPm(e.target.value);
-        setPmSelecionado(pID[0]._id);
+        setPmSelecionado(e.target.selectedOptions[0].id);
     }
 
     function handleFuncional(e) {
-        const fID = funcsAPI.filter(
-            (f) => f.nome.toLowerCase() === e.target.value.toLowerCase()
-        );
-        console.log(fID[0]._id);
-
         setFuncional(e.target.value);
-        setFuncionalSelecionado(fID[0]._id);
+        setFuncionalSelecionado(e.target.selectedOptions[0].id);
     }
+
+
+
+
+
+
+
 
 
     async function HandleTarefa(e) {
@@ -265,6 +265,7 @@ function CadastroProjetos({match}) {
                             <option
                                 key={cliente._id}
                                 name={cliente._id}
+                                id={cliente._id}
                             >
                                 {" "}
                                 {cliente.nome}
@@ -290,7 +291,7 @@ function CadastroProjetos({match}) {
                     <label>PM</label>
                         <select required onChange={HandlePm} value={pm.nome}>
                                 {pmsAPI.map((pm) => (
-                                    <option key={pm._id} name={pm._id}>
+                                    <option key={pm._id} name={pm._id}  id={pm._id}>
                                         {" "}
                                         {pm.nome}
                                     </option>
@@ -301,7 +302,7 @@ function CadastroProjetos({match}) {
                         <label>Funcional</label>
                         <select required onChange={(e) => handleFuncional(e)} value={funcional.nome}>
                             {funcsAPI.map((func) => (
-                                <option key={func._id} name={func._id}>
+                                <option key={func._id} name={func._id} id={func._id}>
                                     {" "}
                                     {func.nome}
                                 </option>
