@@ -43,15 +43,25 @@ function Inicio() {
         setAgenda(e.target);
     }
 
-    function handleShow(e) {
-        setShow(true);
-        setIdSelecionado(e.target.name);
-        tarefas.map((tarefa) => {
-            if (e.target.name === tarefa._id) {
-                setObservacoes(tarefa.observacoes);
-            }
-        });
-    }
+    // function handleShow(e) {
+    //     setShow(true);
+    //     setIdSelecionado(e.target.name);
+    //     tarefas.map((tarefa) => {
+    //         if (e.target.name === tarefa._id) {
+    //             setObservacoes(tarefa.observacoes);
+    //         }
+    //     });
+    // }
+
+    //     function handleShowSolicitadas(e) {
+    //     setShow(true);
+    //     setIdSelecionado(e.target.name);
+    //     solicitadas.map((tarefa) => {
+    //         if (e.target.name === tarefa._id) {
+    //             setObservacoes(tarefa.observacoes);
+    //         }
+    //     });
+    // }
 
     const handleClose = () => setShow(false);
 
@@ -93,8 +103,14 @@ function Inicio() {
     function handleShow(e) {
         setShow(true);
         setIdSelecionado(e.target.name);
-        console.log("idselect: " + e.target.name);
-        const ob = tarefas.filter((tarefa) => tarefa._id === e.target.name);
+        console.log({'idselect' : e.target});
+        let ob = []
+        if(e.target.id === 'res'){
+            ob = tarefas.filter((tarefa) => tarefa._id === e.target.name);
+        }else{
+            ob = solicitadas.filter((tarefa) => tarefa._id === e.target.name);
+        }
+        
         const data = new Date();
         const dataStr =
             (data.getDate() <= 9 ? "0" + data.getDate() : data.getDate()) +
@@ -108,7 +124,7 @@ function Inicio() {
             data.getHours() +
             ":" +
             data.getMinutes();
-        setObservacoes(ob[0].observacoes + "\n" + dataStr + ": ");
+        setObservacoes(ob[0].observacoes + (ob[0].observacoes.length > 0 ? "\n": "") + dataStr + ": ");
     }
 
     useEffect(() => {
@@ -187,6 +203,7 @@ function Inicio() {
                                     <td>{tarefa.status}</td>
                                     <td>
                                         <Link
+                                            id="res"
                                             name={tarefa._id}
                                             onClick={handleShow}
                                         >
@@ -229,6 +246,7 @@ function Inicio() {
                                     <td>
                                         <Link
                                             name={tarefa._id}
+                                            id="sol"
                                             onClick={handleShow}
                                         >
                                             Escrever
