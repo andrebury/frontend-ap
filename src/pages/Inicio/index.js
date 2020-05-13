@@ -30,7 +30,7 @@ function Inicio() {
             desenvolvedor: { nome: "" },
         },
     ]);
-
+    const [solicitadas, setSolicitadas] = useState([]);
     const [observacoes, setObservacoes] = useState("");
     const [show, setShow] = useState(false);
     const [idSelecionado, setIdSelecionado] = useState("");
@@ -128,8 +128,26 @@ function Inicio() {
                     },
                 }
             );
+
+            const responsesol = await api.post(
+                "/tarefa/info",
+                {
+                    solicitante: sessionid,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem(
+                            "Token"
+                        )}`,
+                    },
+                }
+            );
+            console.log({'solicitadas' : responsesol.data.tarefas})
+            setSolicitadas(orderBy(responsesol.data.tarefas, ['prazo'], ['asc']));
+
             console.log(response.data.tarefas)
             setTarefas(orderBy(response.data.tarefas, ['prazo'], ['asc']));
+
 
 
         }
@@ -144,8 +162,8 @@ function Inicio() {
                     <table id="tarefas">
                         <thead>
                             <tr>
-                                <th>Título</th>
                                 <th>Projeto</th>
+                                <th>Título</th>
                                 <th>Prazo</th>
                                 <th>Solicitante</th>
                                 <th>Status</th>
@@ -155,6 +173,7 @@ function Inicio() {
                         <tbody>
                             {tarefas.map((tarefa) => (
                                 <tr key={tarefa._id}>
+                                <td style={{width: 280 }}>{tarefa.projeto.titulo}</td>
                                     <td>
                                         <Link
                                             to={`/tarefa/${tarefa.projeto._id}/${tarefa._id}`}
@@ -162,9 +181,50 @@ function Inicio() {
                                             {tarefa.titulo}
                                         </Link>
                                     </td>
-                                    <td style={{width: 280 }}>{tarefa.projeto.titulo}</td>
+                                    
                                     <td>{tarefa.prazo}</td>
-                                    <td style={{width: 180 }}>{tarefa.solicitante !== undefined ? tarefa.solicitante.nome : ""}</td>
+                                    <td style={{width: 180 }}>{tarefa.solicitante !== undefined ? tarefa.solicitante.nome : ''}</td>
+                                    <td>{tarefa.status}</td>
+                                    <td>
+                                        <Link
+                                            name={tarefa._id}
+                                            onClick={handleShow}
+                                        >
+                                            Escrever
+                                        </Link>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+
+                    <h1 style={{marginTop:10}}>Tarefas Solicitadas pelo Usuário</h1>
+
+                    <table id="tarefas">
+                        <thead>
+                            <tr>
+                                <th>Projeto</th>
+                                <th>Título</th>
+                                <th>Prazo</th>
+                                <th>Responsavel</th>
+                                <th>Status</th>
+                                <th>Observações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {solicitadas.map((tarefa) => (
+                                <tr key={tarefa._id}>
+                                <td style={{width: 280 }}>{tarefa.projeto.titulo}</td>
+                                    <td>
+                                        <Link
+                                            to={`/tarefa/${tarefa.projeto._id}/${tarefa._id}`}
+                                        >
+                                            {tarefa.titulo}
+                                        </Link>
+                                    </td>
+                                    
+                                    <td>{tarefa.prazo}</td>
+                                    <td style={{width: 180 }}>{tarefa.desenvolvedor !== undefined ? tarefa.desenvolvedor.nome : ''}</td>
                                     <td>{tarefa.status}</td>
                                     <td>
                                         <Link
@@ -205,12 +265,12 @@ function Inicio() {
                     </Modal>
                 </div>
                 <div className="container-direita">
-                    <div className="alertas">
+                    {/* <div className="alertas">
                         <h1>Alertas</h1>
                         <span>adicionar : </span>
                         <input></input>
                         <button>Adicionar</button>
-                    </div>
+                    </div> */}
                     <div className="calendario">
                         <h1>Agenda</h1>
 
