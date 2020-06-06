@@ -17,6 +17,26 @@ function Tarefas({match}) {
 
     const handleClose = () => setShow(false);
 
+    const dataAmericana = (date) =>{
+
+        if(date == undefined || date == ''){
+            return date
+        }else{
+            return date.substring(6,10) + '-' + date.substring(3,5) + '-' + date.substring(0,2)
+        }
+        
+    }
+
+    const dataBrasil = (date) =>{
+
+        if(date == undefined || date == ''){
+            return date
+        }else{
+            return date.substring(8,10) + '/' + date.substring(5,7) + '/' + date.substring(0,4)
+        }
+    }
+
+
     async function handleSave(e) {
         const t = tarefas.filter((tarefa) => e.target.name === tarefa._id);
 
@@ -88,7 +108,7 @@ function Tarefas({match}) {
             }
             setIdProjeto(idBusca);
 
-            const response = await api.post(
+            let response = await api.post(
                 "/tarefa/info",
                 { projeto: idBusca },
                 {
@@ -100,8 +120,17 @@ function Tarefas({match}) {
                 }
             );
 
-            setTarefas(orderBy(response.data.tarefas,['prazo'],['asc']));
-            console.log(response.data.tarefas);
+            response.data.tarefas.map((dia) => {
+                dia.prazo = dataAmericana(dia.prazo)
+            })
+
+            response.data.tarefas = orderBy(response.data.tarefas, ['prazo'], ['asc'])
+
+            response.data.tarefas.map((dia) => {
+                dia.prazo = dataBrasil(dia.prazo)
+            })
+
+            setTarefas(response.data.tarefas);
             setObservacoes(response.data.tarefas.observacoes);
         }
         carregaTarefas();

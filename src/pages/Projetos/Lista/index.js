@@ -9,6 +9,25 @@ function ListaProjetos() {
 
     const [projetos, setProjetos] = useState([{}]);
 
+        const dataAmericana = (date) =>{
+
+        if(date == undefined || date == ''){
+            return date
+        }else{
+            return date.substring(6,10) + '-' + date.substring(3,5) + '-' + date.substring(0,2)
+        }
+        
+    }
+
+    const dataBrasil = (date) =>{
+
+        if(date == undefined || date == ''){
+            return date
+        }else{
+            return date.substring(8,10) + '/' + date.substring(5,7) + '/' + date.substring(0,4)
+        }
+    }
+
     useEffect(() => {
         async function carrageProjetos() {
             await api
@@ -20,7 +39,19 @@ function ListaProjetos() {
                     },
                 })
                 .then((response) => {
-                    setProjetos(orderBy(response.data.projetos,['prazo'],['asc']))
+                    
+                    response.data.projetos.map((dia) => {
+                        dia.prazo = dataAmericana(dia.prazo)
+                    })
+
+                    response.data.projetos = orderBy(response.data.projetos, ['prazo'], ['asc'])
+
+                    response.data.projetos.map((dia) => {
+                        dia.prazo = dataBrasil(dia.prazo)
+                    })
+
+                    setProjetos(response.data.projetos);            
+                    
                 });
         }
         carrageProjetos();

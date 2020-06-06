@@ -43,26 +43,29 @@ function Inicio() {
         setAgenda(e.target);
     }
 
-    // function handleShow(e) {
-    //     setShow(true);
-    //     setIdSelecionado(e.target.name);
-    //     tarefas.map((tarefa) => {
-    //         if (e.target.name === tarefa._id) {
-    //             setObservacoes(tarefa.observacoes);
-    //         }
-    //     });
-    // }
 
-    //     function handleShowSolicitadas(e) {
-    //     setShow(true);
-    //     setIdSelecionado(e.target.name);
-    //     solicitadas.map((tarefa) => {
-    //         if (e.target.name === tarefa._id) {
-    //             setObservacoes(tarefa.observacoes);
-    //         }
-    //     });
-    // }
 
+    const dataAmericana = (date) =>{
+
+        if(date == undefined || date == ''){
+            return date
+        }else{
+            return date.substring(6,10) + '-' + date.substring(3,5) + '-' + date.substring(0,2)
+        }
+        
+    }
+
+    const dataBrasil = (date) =>{
+
+        if(date == undefined || date == ''){
+            return date
+        }else{
+            return date.substring(8,10) + '/' + date.substring(5,7) + '/' + date.substring(0,4)
+        }
+    }
+
+
+ 
     const handleClose = () => setShow(false);
 
     async function handleSave(e) {
@@ -131,7 +134,7 @@ function Inicio() {
         async function carrageTarefas() {
             const sessionid = sessionStorage.getItem("sessionid");
 
-            const response = await api.post(
+            let pendencias = await api.post(
                 "/tarefa/info",
                 {
                     desenvolvedor: sessionid,
@@ -145,7 +148,7 @@ function Inicio() {
                 }
             );
 
-            const responsesol = await api.post(
+            let solicitadas = await api.post(
                 "/tarefa/info",
                 {
                     solicitante: sessionid,
@@ -158,13 +161,35 @@ function Inicio() {
                     },
                 }
             );
-            console.log({'solicitadas' : responsesol.data.tarefas})
-            setSolicitadas(orderBy(responsesol.data.tarefas, ['prazo'], ['asc']));
+            console.log({'voce_solicitou' : solicitadas.data.tarefas})
+            console.log({'solicitado_a_voce' : pendencias.data.tarefas})
+            //Colocar todas as datas de prazo no formato americano
+            solicitadas.data.tarefas.map((dia) => {
+                console.log('solicitadas prazo: ' + dia.prazo)
+                dia.prazo = dataAmericana(dia.prazo)
+            })
 
-            console.log(response.data.tarefas)
-            setTarefas(orderBy(response.data.tarefas, ['prazo'], ['asc']));
+            pendencias.data.tarefas.map((dia) => {
+                console.log('pendencias prazo: ' + dia.prazo)
+                dia.prazo = dataAmericana(dia.prazo)
+            })
+            
+            //ordenar com o lodash por prazo. Data mais próximas até a mais distante
+            solicitadas.data.tarefas = orderBy(solicitadas.data.tarefas, ['prazo'], ['asc'])
+            pendencias.data.tarefas = orderBy(pendencias.data.tarefas, ['prazo'], ['asc'])
 
+            //Colocar todas as datas de prazo no formato brasileiro
+            solicitadas.data.tarefas.map((dia) => {
+                dia.prazo = dataBrasil(dia.prazo)
+            })
 
+            pendencias.data.tarefas.map((dia) => {
+                dia.prazo = dataBrasil(dia.prazo)
+            })
+
+            //setar no state
+            setSolicitadas(solicitadas.data.tarefas);
+            setTarefas(pendencias.data.tarefas);
 
         }
         carrageTarefas();
