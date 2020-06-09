@@ -7,12 +7,19 @@
 
     display: grid;
     grid-template-columns: 3fr 1fr;
-    grid-template-rows: 80vh;
+    grid-template-rows: 40vh;
     grid-column-gap: 900px;
 }
-
-.lista-tarefas {
+.container-timeline {
+    margin-top: 90px;
     grid-row-start: 1;
+    grid-row-end: 1;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    height: auto;
+}
+.lista-tarefas {
+    grid-row-start: 2;
     grid-row-end: 4;
     grid-column-start: 1;
     grid-column-end: 2;
@@ -23,7 +30,7 @@
 .container-direita {
     width: 100%;
     height: auto;
-    grid-row-start: 1;
+    grid-row-start: 2;
     grid-row-end: 2;
     grid-column-start: 2;
     grid-column-end: 3;
@@ -48,30 +55,11 @@
     }
 }
 
-@media only screen and (max-width: 1756px) {
-    /* For mobile phones: */
-    .container-inicio {
-        grid-column-gap: 100px;
-    }
-}
-
-@media only screen and (max-width: 1430px) {
-    /* For mobile phones: */
-    .container-direita {
-        grid-column-start: 1;
-        grid-column-end: 1;
-        grid-row-start: 5;
-        grid-row-end: 6;
-    }
-    .lista-tarefas {
-        width: 300px;
-    }
-}
-
 #tarefas {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    margin-bottom: 10px
 }
 
 #tarefas td,
@@ -89,6 +77,35 @@
 }
 
 #tarefas th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+}
+
+#timeline {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    border-collapse: collapse;
+}
+
+#timeline td,
+#timeline th {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    border: 1px solid #ddd;
+    padding-left: 8px;
+    height: 12px
+}
+
+#timeline tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#timeline tr:hover {
+    background-color: #ddd;
+}
+
+#timeline th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: center;

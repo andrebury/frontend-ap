@@ -37,6 +37,102 @@ function Inicio() {
     const [agenda, setAgenda] = useState(new Date());
     const [alertas, setAlertas] = useState([]);
 
+    function getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    function Timeline() {
+        const coresArray = [`CornflowerBlue`,`PowderBlue`,`Violet`,`LightBlue`,`Maroon`,`DarkGreen`,`Tomato`,`MediumSpringGreen`,`MediumPurple`,`Crimson`,`Orange`,`Gold`,`LightSeaGreen`,`Thistle`,`LightCyan`,`Bisque`,`DarkOrange`,`DarkSalmon`,`MediumSlateBlue`,`Tan`,`DarkOliveGreen`,`Turquoise`,`SlateBlue`]
+        let datasArray = []
+        tarefas.map((tarefa) => {
+            tarefa.corTimeline = coresArray[Math.round(getRandomArbitrary(0,coresArray.length))]
+            console.log(tarefa.corTimeline)
+        })
+
+        const mesTexto = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez']
+         for (let index = 0; index <= 30; index++) 
+        {
+            const diasAtras = new Date(Date.now())
+            diasAtras.setDate(diasAtras.getDate())
+            diasAtras.setDate(diasAtras.getDate() + index)
+
+            datasArray.push(
+                {
+                'diaReduzido':  (diasAtras.getDate() < 10 ? '0' + diasAtras.getDate(): diasAtras.getDate() ) + '/' + mesTexto[diasAtras.getMonth()],
+                'diaTotal'   :  (diasAtras.getFullYear() + '-' + ((diasAtras.getMonth() + 1) < 10 ? '0' + (diasAtras.getMonth() + 1): (diasAtras.getMonth() + 1)) + '-' + (diasAtras.getDate() < 10 ? '0' + diasAtras.getDate(): diasAtras.getDate())),
+                'diaSemana'  :  diasAtras.getDay()
+                }
+            )
+            //console.log((diasAtras.getDate() < 10 ? '0' + diasAtras.getDate(): diasAtras.getDate() ) + '/' + mesTexto[diasAtras.getMonth()])
+            
+        }
+
+        return (
+            <>
+            
+            <table id="timeline">
+                <thead>
+                <tr>
+                <th style={{width:250, fontSize:16}} >Projeto</th>
+                <th style={{width:300, fontSize:16}}>Tarefa</th>
+                {
+                    datasArray.map((dia) => {
+                        if(dia.diaSemana === 6){
+                            return(<td>Final de semana</td>)
+                            //, backgroundColor: 'gray'
+                        if(dia.diaSemana === 0 ){
+
+                        }
+                        }else{
+                            return(<th style={{fontSize:11}}>{dia.diaReduzido}</th>)
+                        }
+                        
+                    })
+                }
+                </tr>
+                </thead>
+                <tbody>
+                    {
+                        tarefas.map((tarefa) => (
+                            <tr key={tarefa._id}>
+                            <td>{tarefa.projeto.titulo.length > 40 ? tarefa.projeto.titulo.substring(0,37) + '...' :tarefa.projeto.titulo}</td>
+                            <td>
+                                <Link
+                                    to={`/tarefa/${tarefa.projeto._id}/${tarefa._id}`}
+                                >
+                                {tarefa.titulo.length > 45 ? tarefa.titulo.substring(0,42) + '...':tarefa.titulo }</Link></td>
+                            {
+                                
+                                datasArray.map((dia) => {
+
+                                    // if(dia.diaSemana === 0 ||dia.diaSemana === 6){
+                                    //     return(<td style={{borderStyle:'none' }}></td>)
+                                    //     //, backgroundColor: 'gray'
+                                    // }
+                                    if(dia.diaTotal >= dataAmericana(tarefa.inicio) & dia.diaTotal <= dataAmericana(tarefa.prazo)){
+                                        
+                                        return(<td style={{borderStyle: 'none', backgroundColor: tarefa.corTimeline}}></td>)
+                                    }else{
+                                        return(<td></td>)
+                                    }
+                                     
+                    })
+                      }
+                            </tr>
+
+                        ))
+
+                    }
+                    
+                    
+                </tbody>
+            </table>
+            </>
+        )
+    }
+
+
+
 
     function calendarioOnClick(e) {
         //console.log(e);
@@ -198,7 +294,14 @@ function Inicio() {
     return (
         <>
             <div className="container-inicio">
+                <div className="container-timeline">
+                <h2>Planner - Tarefas</h2>
+                    <Timeline />
+                </div>
                 <div className="lista-tarefas">
+                <div>
+                    
+                </div>
                     <h1>Tarefas Pendentes do Usuário</h1>
                     <table id="tarefas">
                         <thead>
@@ -240,7 +343,7 @@ function Inicio() {
                         </tbody>
                     </table>
 
-                    <h1 style={{marginTop:10}}>Tarefas Solicitadas pelo Usuário</h1>
+                    <h1 >Tarefas Solicitadas pelo Usuário</h1>
 
                     <table id="tarefas">
                         <thead>
@@ -281,6 +384,8 @@ function Inicio() {
                             ))}
                         </tbody>
                     </table>
+
+                    
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
                             <Modal.Title>Observações</Modal.Title>
