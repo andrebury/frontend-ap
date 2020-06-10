@@ -45,7 +45,7 @@ function Inicio() {
         const coresArray = [`CornflowerBlue`,`PowderBlue`,`Violet`,`LightBlue`,`Maroon`,`DarkGreen`,`Tomato`,`MediumSpringGreen`,`MediumPurple`,`Crimson`,`Orange`,`Gold`,`LightSeaGreen`,`Thistle`,`LightCyan`,`Bisque`,`DarkOrange`,`DarkSalmon`,`MediumSlateBlue`,`Tan`,`DarkOliveGreen`,`Turquoise`,`SlateBlue`]
         let datasArray = []
         tarefas.map((tarefa) => {
-            tarefa.corTimeline = coresArray[Math.round(getRandomArbitrary(0,coresArray.length))]
+            tarefa.corTimeline = coresArray[Math.round(getRandomArbitrary(0,coresArray.length - 1))]
             console.log(tarefa.corTimeline)
         })
 
@@ -73,18 +73,18 @@ function Inicio() {
             <table id="timeline">
                 <thead>
                 <tr>
-                <th style={{width:250, fontSize:16}} >Projeto</th>
+                <th style={{width:300, fontSize:16}} >Projeto</th>
                 <th style={{width:300, fontSize:16}}>Tarefa</th>
                 {
                     datasArray.map((dia) => {
                         if(dia.diaSemana === 6){
-                            return(<td>Final de semana</td>)
+                            return(<th style={{textAlign: 'center'}}>Final de semana</th>)
                             //, backgroundColor: 'gray'
                         if(dia.diaSemana === 0 ){
 
                         }
                         }else{
-                            return(<th style={{fontSize:11}}>{dia.diaReduzido}</th>)
+                            return(<th style={{textAlign: 'center'}}>{dia.diaReduzido}</th>)
                         }
                         
                     })
@@ -95,12 +95,12 @@ function Inicio() {
                     {
                         tarefas.map((tarefa) => (
                             <tr key={tarefa._id}>
-                            <td>{tarefa.projeto.titulo.length > 40 ? tarefa.projeto.titulo.substring(0,37) + '...' :tarefa.projeto.titulo}</td>
+                            <td>{tarefa.projeto.titulo.length > 50 ? tarefa.projeto.titulo.substring(0,48) + '...' :tarefa.projeto.titulo}</td>
                             <td>
                                 <Link
                                     to={`/tarefa/${tarefa.projeto._id}/${tarefa._id}`}
                                 >
-                                {tarefa.titulo.length > 45 ? tarefa.titulo.substring(0,42) + '...':tarefa.titulo }</Link></td>
+                                {tarefa.titulo.length > 50 ? tarefa.titulo.substring(0,48) + '...':tarefa.titulo }</Link></td>
                             {
                                 
                                 datasArray.map((dia) => {
@@ -302,12 +302,13 @@ function Inicio() {
                 <div>
                     
                 </div>
+                <div>
                     <h1>Tarefas Pendentes do Usuário</h1>
                     <table id="tarefas">
                         <thead>
                             <tr>
-                                <th>Projeto</th>
-                                <th>Título</th>
+                                <th style={{width:400}}>Projeto</th>
+                                <th style={{width:400}}>Título</th>
                                 <th>Prazo</th>
                                 <th>Solicitante</th>
                                 <th>Status</th>
@@ -317,7 +318,7 @@ function Inicio() {
                         <tbody>
                             {tarefas.map((tarefa) => (
                                 <tr key={tarefa._id}>
-                                <td style={{width: 280 }}>{tarefa.projeto.titulo}</td>
+                                <td>{tarefa.projeto.titulo}</td>
                                     <td>
                                         <Link
                                             to={`/tarefa/${tarefa.projeto._id}/${tarefa._id}`}
@@ -327,7 +328,7 @@ function Inicio() {
                                     </td>
                                     
                                     <td>{tarefa.prazo}</td>
-                                    <td style={{width: 180 }}>{tarefa.solicitante !== undefined ? tarefa.solicitante.nome : ''}</td>
+                                    <td>{tarefa.solicitante !== undefined ? tarefa.solicitante.nome : ''}</td>
                                     <td>{tarefa.status}</td>
                                     <td>
                                         <Link
@@ -342,14 +343,15 @@ function Inicio() {
                             ))}
                         </tbody>
                     </table>
-
+                    </div>
+                    <div>
                     <h1 >Tarefas Solicitadas pelo Usuário</h1>
 
                     <table id="tarefas">
                         <thead>
                             <tr>
-                                <th>Projeto</th>
-                                <th>Título</th>
+                                <th style={{width:400}}>Projeto</th>
+                                <th style={{width:400}}>Título</th>
                                 <th>Prazo</th>
                                 <th>Responsavel</th>
                                 <th>Status</th>
@@ -359,7 +361,7 @@ function Inicio() {
                         <tbody>
                             {solicitadas.map((tarefa) => (
                                 <tr key={tarefa._id}>
-                                <td style={{width: 280 }}>{tarefa.projeto.titulo}</td>
+                                <td>{tarefa.projeto.titulo}</td>
                                     <td>
                                         <Link
                                             to={`/tarefa/${tarefa.projeto._id}/${tarefa._id}`}
@@ -369,7 +371,7 @@ function Inicio() {
                                     </td>
                                     
                                     <td>{tarefa.prazo}</td>
-                                    <td style={{width: 180 }}>{tarefa.desenvolvedor !== undefined ? tarefa.desenvolvedor.nome : ''}</td>
+                                    <td>{tarefa.desenvolvedor !== undefined ? tarefa.desenvolvedor.nome : ''}</td>
                                     <td>{tarefa.status}</td>
                                     <td>
                                         <Link
@@ -384,7 +386,7 @@ function Inicio() {
                             ))}
                         </tbody>
                     </table>
-
+                    </div>
                     
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>

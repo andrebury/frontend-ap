@@ -4,12 +4,14 @@
     padding: 0;
     margin-left: 20px;
     margin-right: 20px;
-
     display: grid;
-    grid-template-columns: 3fr 1fr;
-    grid-template-rows: 40vh;
-    grid-column-gap: 900px;
+    grid-template-rows: 35vh;
+    grid-column-gap: 400px;
 }
+  .container-inicio h1 {
+        text-align: left;
+    }
+
 .container-timeline {
     margin-top: 90px;
     grid-row-start: 1;
@@ -17,55 +19,65 @@
     grid-column-start: 1;
     grid-column-end: 3;
     height: auto;
+    width: 1864px
 }
 .lista-tarefas {
     grid-row-start: 2;
-    grid-row-end: 4;
+    grid-row-end: 3;
     grid-column-start: 1;
-    grid-column-end: 2;
-    width: 1100px;
+    grid-column-end: 1;
+    width: 1400px;
     height: auto;
+    padding-top: 80px
 }
-
 .container-direita {
     width: 100%;
     height: auto;
     grid-row-start: 2;
     grid-row-end: 2;
     grid-column-start: 2;
-    grid-column-end: 3;
-    display: grid;
+    grid-column-end: 2;
+    padding-top: 80px
 }
 
-.alerta {
-    grid-row-start: 1;
-    grid-row-start: 2;
-}
-
-.calendario {
-    grid-row-start: 2;
-    grid-row-start: 3;
-    width: auto;
-}
 
 @media only screen and (max-width: 2132px) {
     /* For mobile phones: */
     .container-inicio {
-        grid-column-gap: 400px;
+        grid-column-gap: 100px;
+    }
+}
+
+@media only screen and (min-width: 2132px) {
+    /* For mobile phones: */
+    .container-direita {
+        grid-row-start: 1;
+        padding-top: 1px;
+        margin-top: 0px;
+        margin-left: 40px
+    }
+  
+    .container-timeline {
+        grid-column-end: 2;
+    }
+    .container-inicio {
+        grid-column-gap: 20px;
     }
 }
 
 #tarefas {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
-    margin-bottom: 10px
+    margin-bottom: 40px
 }
 
 #tarefas td,
 #tarefas th {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
     border: 1px solid #ddd;
-    padding: 8px;
+    height: 12px; 
 }
 
 #tarefas tr:nth-child(even) {
@@ -80,6 +92,7 @@
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: center;
+    font-size: 16px;
 }
 
 #timeline {
@@ -93,8 +106,7 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 12px;
     border: 1px solid #ddd;
-    padding-left: 8px;
-    height: 12px
+    height: 12px;    
 }
 
 #timeline tr:nth-child(even) {
