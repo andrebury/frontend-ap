@@ -42,11 +42,14 @@ function Inicio() {
     }
 
     function Timeline() {
-        const coresArray = [`CornflowerBlue`,`PowderBlue`,`Violet`,`LightBlue`,`Maroon`,`DarkGreen`,`Tomato`,`MediumSpringGreen`,`MediumPurple`,`Crimson`,`Orange`,`Gold`,`LightSeaGreen`,`Thistle`,`LightCyan`,`Bisque`,`DarkOrange`,`DarkSalmon`,`MediumSlateBlue`,`Tan`,`DarkOliveGreen`,`Turquoise`,`SlateBlue`]
+        const coresArray = [`#836FFF`,`RoyalBlue`,`DarkTurquoise`,`PowderBlue`]
         let datasArray = []
+        let pos = 0
         tarefas.map((tarefa) => {
-            tarefa.corTimeline = coresArray[Math.round(getRandomArbitrary(0,coresArray.length - 1))]
+            tarefa.corTimeline = coresArray[pos]
             console.log(tarefa.corTimeline)
+            pos = pos === coresArray.length - 1 ? 0 : pos + 1
+            
         })
 
         const mesTexto = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez']
@@ -109,7 +112,7 @@ function Inicio() {
                                     //     return(<td style={{borderStyle:'none' }}></td>)
                                     //     //, backgroundColor: 'gray'
                                     // }
-                                    if(dia.diaTotal >= dataAmericana(tarefa.inicio) & dia.diaTotal <= dataAmericana(tarefa.prazo)){
+                                    if(dia.diaTotal >= dataAmericana(tarefa.inicio) & dia.diaTotal <= dataAmericana(tarefa.prazo) & dia.diaSemana !== 6){
                                         
                                         return(<td style={{borderStyle: 'none', backgroundColor: tarefa.corTimeline}}></td>)
                                     }else{
