@@ -80,13 +80,11 @@ function Inicio() {
                 <th style={{width:300, fontSize:16}}>Tarefa</th>
                 {
                     datasArray.map((dia) => {
+
                         if(dia.diaSemana === 6){
                             return(<th style={{textAlign: 'center'}}>Final de semana</th>)
-                            //, backgroundColor: 'gray'
-                        if(dia.diaSemana === 0 ){
-
                         }
-                        }else{
+                        if(dia.diaSemana != 0 && dia.diaSemana != 6 ){
                             return(<th style={{textAlign: 'center'}}>{dia.diaReduzido}</th>)
                         }
                         
