@@ -82,8 +82,11 @@ function Inicio() {
                     datasArray.map((dia) => {
 
                         if(dia.diaSemana === 6){
-                            return(<th style={{textAlign: 'center'}}>Final de semana</th>)
+                            return(<th colspan="2" style={{textAlign: 'center'}}>Final de semana</th>)
                         }
+                        // if(dia.diaSemana === 0){
+                        //     return(<th style={{textAlign: 'center'}}>Final de semana</th>)
+                        // }
                         if(dia.diaSemana != 0 && dia.diaSemana != 6 ){
                             return(<th style={{textAlign: 'center'}}>{dia.diaReduzido}</th>)
                         }
@@ -105,12 +108,14 @@ function Inicio() {
                             {
                                 
                                 datasArray.map((dia) => {
+                                    console.log('tarefa: ' + tarefa.titulo + ', dia: ' + dia.diaSemana)
 
-                                    // if(dia.diaSemana === 0 ||dia.diaSemana === 6){
-                                    //     return(<td style={{borderStyle:'none' }}></td>)
-                                    //     //, backgroundColor: 'gray'
-                                    // }
-                                    if(dia.diaTotal >= dataAmericana(tarefa.inicio) & dia.diaTotal <= dataAmericana(tarefa.prazo) & dia.diaSemana !== 6){
+                                    if(dia.diaSemana === 6 || dia.diaSemana === 0 ){
+                                        return(<td style={{borderStyle:'none' , backgroundColor: 'gray'}}></td>)
+                                        
+                                    }
+                                    if(dia.diaTotal >= dataAmericana(tarefa.inicio) & dia.diaTotal <= dataAmericana(tarefa.prazo) &&
+                                        (dia.diaSemana != 0 && dia.diaSemana != 6)) {
                                         
                                         return(<td style={{borderStyle: 'none', backgroundColor: tarefa.corTimeline}}></td>)
                                     }else{
