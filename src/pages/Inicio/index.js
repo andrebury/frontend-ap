@@ -111,8 +111,8 @@ function Inicio() {
                                     console.log('tarefa: ' + tarefa.titulo + ', dia: ' + dia.diaSemana)
 
                                     if(dia.diaSemana === 6 || dia.diaSemana === 0 ){
-                                        return(<td style={{borderStyle:'none' , backgroundColor: 'gray'}}></td>)
-                                        
+                                        return(<td style={{borderStyle:'none' }}></td>)
+                                        // , backgroundColor: 'gray'
                                     }
                                     if(dia.diaTotal >= dataAmericana(tarefa.inicio) & dia.diaTotal <= dataAmericana(tarefa.prazo) &&
                                         (dia.diaSemana != 0 && dia.diaSemana != 6)) {

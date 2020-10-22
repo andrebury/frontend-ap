@@ -1,11 +1,11 @@
 .container-inicio {
     margin: 0;
     outline: 0;
-    padding: 0;
+    padding-top: 90px;
     margin-left: 20px;
     margin-right: 20px;
     display: grid;
-    grid-template-rows: 35vh;
+    grid-template-rows: auto;
     grid-column-gap: 400px;
 }
   .container-inicio h1 {
@@ -13,9 +13,9 @@
     }
 
 .container-timeline {
-    margin-top: 90px;
+    /* margin-top: 90px; */
     grid-row-start: 1;
-    grid-row-end: 1;
+    grid-row-end: 1; 
     grid-column-start: 1;
     grid-column-end: 3;
     height: auto;
@@ -28,7 +28,6 @@
     grid-column-end: 1;
     width: 1400px;
     height: auto;
-    padding-top: 80px
 }
 .container-direita {
     width: 100%;
@@ -37,7 +36,6 @@
     grid-row-end: 2;
     grid-column-start: 2;
     grid-column-end: 2;
-    padding-top: 80px
 }
 
 
