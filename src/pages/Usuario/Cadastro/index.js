@@ -17,21 +17,21 @@ function CadastroUsuario() {
 
 
     function validador(){
-        if(email.indexOf('@globalhitss.com.br') > 0 || email.indexOf('@primesys.com.br') > 0 ||
-                 email.indexOf('@embratel.com.br') > 0 ||  
-                        email.indexOf('@claro.com.br') > 0 ){
-            if(nome.length > 0){
-                if(senha.length >= 6 & senha === senha2){
-                    setValidated(true);
-                }else {
-                    alert("Confirme corretamente sua senha de 6 caracteres.")
-                }
-            }else {
-                    alert("Favor escrever seu nome.")
-                }
-        }else {
-                    alert("Digite o email correto. \nEmail necessita ser da GlobalHitss, Primesys, Embratel ou Claro.")
-                }
+       
+	    if(nome.length > 0){
+		    if(senha.length >= 6 & senha === senha2){
+			    setValidated(true);
+		    }
+		    else 
+		    {
+			    alert("Confirme corretamente sua senha de 6 caracteres.")
+		    }
+	    }
+	    else 
+	    {
+		    alert("Favor escrever seu nome.")
+	    }
+        
     }
 
 
