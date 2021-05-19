@@ -45,6 +45,8 @@ const Routes = () => {
                 <Route path="/cadastro-tarefa/:projeto_id" component={CadastroTarefa} />
                 <Route path="/tarefa/:projeto_id/:tarefa_id" component={CadastroTarefa} />
                 
+                <PrivateRoute path="/relatorios" component={Relatorios} />
+
                 <PrivateRoute path="/home" component={Inicio} />
             </Switch>
         

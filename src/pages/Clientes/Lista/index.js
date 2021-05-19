@@ -38,8 +38,17 @@ function Clientes() {
                     <IoMdAdd color="#4983ee" />
                 </Link>
             </h1>
-            <div align="center">
-            <table id="clientes">
+            <div className="clientes-lista">
+            {clientes.map((cliente) => (
+                <div className="cliente-unit" >
+                            <h5> <Link to={`/cadastro-cliente?idCliente=${cliente._id}`}>{cliente.nome}</Link></h5>
+                        <section>
+                            <span><b>Ramo:</b> {cliente.ramo}</span>                           
+                            <span><b>Clientes Solicitantes: </b>{cliente.solicitantes.map((sol) => " " + sol + " ").toString()}</span>                            
+                        </section>
+                </div>
+            ))} 
+            {/* <table id="clientes">
                 <thead>
                     <tr>
                         <th>Nome</th>
@@ -66,7 +75,7 @@ function Clientes() {
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </table> */}
             </div>
             
         </>

@@ -1,0 +1,104 @@
+#lista-tarefas {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 1600px;
+    margin-bottom: 20px;
+}
+
+#lista-tarefas td,
+#lista-tarefas th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#lista-tarefas tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#lista-tarefas tr:hover {
+    background-color: #ddd;
+}
+
+#lista-tarefas th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+}
+
+button {
+    cursor: pointer;
+}
+
+.button {
+    background: #4983ee;
+    border: 0;
+    border-radius: 8px;
+    color: #fff;
+    margin-top: 16px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 7;
+    line-height: 60px;
+    transition: 0.2s;
+}
+
+.button:hover {
+    filter: brightness(90%);
+}
+
+
+.cadastro-container select {
+    width: 250px;
+    text-align: center;
+}
+.cadastro-container section{
+    margin-left: 10px;
+    align-items: center;
+}
+.cadastro-container select{
+    height: 30px;
+}
+.cadastro-container label{
+    font-size: 15px;
+}
+
+.projetos-lista{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+
+.tarefa-unit{
+    height: 145px;
+    border: #222121;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0.5rem;
+    margin: 5px;
+    padding: 5px;
+    font-style: black;
+
+}
+.tarefa-unit p{
+    margin-bottom: 5px;
+}
+
+.tarefa-unit span{
+    font-size: 12px;
+}
+.tarefa-infos{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+.tarefa-unit section{
+    flex-direction: column;
+}
+a{
+    color: black;
+}
