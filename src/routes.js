@@ -12,6 +12,8 @@ import CadastroUsuario from './pages/Usuario/Cadastro';
 import ListaProjetos from './pages/Projetos/Lista';
 import Tarefas from './pages/Tarefas/Lista';
 import CadastroTarefa from './pages/Tarefas/Cadastro';
+import Relatorios from './pages/Relatorios';
+
 import Inicio from './pages/Inicio';
 
 

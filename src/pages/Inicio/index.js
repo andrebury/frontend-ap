@@ -427,7 +427,7 @@ function Inicio() {
                         <input></input>
                         <button>Adicionar</button>
                     </div> */}
-                    <div className="calendario">
+                    {/* <div className="calendario">
                         <h1>Agenda</h1>
 
                         <Calendar
@@ -435,7 +435,7 @@ function Inicio() {
                             onChange={(e) => calendarioOnClick(e)}
                             value={agenda}
                         />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>
