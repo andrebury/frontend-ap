@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Form, Button, Col } from "react-bootstrap";
+
 import api from "../../../services/api";
 import querystring from "query-string";
+import "./styles.css";
 
 function CadastroCliente() {
     const history = useHistory();
@@ -95,60 +96,24 @@ function CadastroCliente() {
         <>
             <Titulo />
 
-            <Form noValidate onSubmit={handleSubmit} validated={validated}>
-                <Form.Row>
-                    <Form.Group as={Col} controlId="nome">
-                        <Form.Label>Nome</Form.Label>
-                        <Form.Control
-                            required
-                            type="text"
-                            placeholder="Nome do Cliente"
-                            value={nome}
-                            onChange={(e) => setNome(e.target.value)}
-                            required
-                        />
-                        <Form.Control.Feedback type="invalid">
-                            Digite o Nome do Cliente
-                        </Form.Control.Feedback>
-                    </Form.Group>
+            <form onSubmit={handleSubmit}>
 
-                    <Form.Group as={Col} controlId="ramo">
-                        <Form.Label>Ramo</Form.Label>
-                        <Form.Control
-                            required
-                            type="text"
-                            placeholder="Ramo do Cliente"
-                            value={ramo}
-                            onChange={(e) => setRamo(e.target.value)}
-                            required
-                        />
-                        <Form.Control.Feedback type="invalid">
-                            Digite o Ramo do Cliente
-                        </Form.Control.Feedback>
-                    </Form.Group>
-                </Form.Row>
+            <div className="primeiro">
+            <label>Nome</label>
+            <input onChange={(e) => setNome(e.target.value)} placeholder="Nome do Cliente" value={nome}></input>
+            </div>
 
-                <Form.Row>
-                    <Form.Group as={Col} controlId="solicitantes">
-                        <Form.Label>Solicitante</Form.Label>
-                        <Form.Control
-                            type="text"
-                            placeholder="Solicitantes"
-                            required
-                            value={solicitantes}
-                            onChange={(e) => setSolicitantes(e.target.value)}
-                            required
-                        />
-                        <Form.Control.Feedback type="invalid">
-                            Informe os Solicitantes separados por vírgula
-                        </Form.Control.Feedback>
-                    </Form.Group>
-                </Form.Row>
-                <Col md={{ span: 6, offset: 3 }}>
-                    <Button type="submit">Salvar</Button>
-                </Col>
-                <br></br>
-            </Form>
+            <div className="segundo">
+            <label>Ramo</label>
+            <input onChange={(e) => setRamo(e.target.value)} placeholder="Ramo" value={ramo}></input>
+            
+            <label>Solicitante</label>
+            <input onChange={(e) => setSolicitantes(e.target.value)} placeholder="Solicitentes" value={solicitantes}></input>
+            
+            </div>
+            
+            </form>
+            
         </>
     );
 }
