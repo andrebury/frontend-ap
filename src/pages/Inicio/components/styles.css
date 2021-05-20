@@ -1,0 +1,24 @@
+.preview-cadastro {
+    
+    padding-left: 30px;
+}
+
+.preview-cadastro section{
+    display:flex;
+    margin-top: 5px;
+    align-items: center;
+}
+.preview-cadastro h4{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.preview-cadastro textarea{
+    width: -webkit-fill-available;
+    margin-left: 10px;
+
+}
+
+.preview-cadastro span{
+    margin-left: 10px;
+
+}

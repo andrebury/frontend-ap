@@ -180,7 +180,7 @@ function Tarefas({match}) {
         <div classname='tarefas-cadastro'>
             <Titulo />
 
-            <div className="cadastro-container">
+            <div className="cadastro-tarefas-container">
             <form onSubmit={handleSubmit}>
             <section className="primeiro">
             <div>

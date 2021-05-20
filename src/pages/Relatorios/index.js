@@ -241,8 +241,7 @@ function Tarefas({match}) {
                 <option value="Desenho" name="Desenho">Desenho</option>
                 <option value="Homologando" name="Homologando">Homologando</option>
             </select>
-            </section>
-            <section>
+
             <label>Responsável</label>
             <select required onChange={handleResponsavel} value={responsavel.nome} className="responsavel-filtro">
                 <option key='Todos' name="Todos" id="Todos">

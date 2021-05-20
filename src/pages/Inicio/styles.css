@@ -4,63 +4,37 @@
     padding-top: 90px;
     margin-left: 20px;
     margin-right: 20px;
-    display: grid;
-    grid-template-rows: auto;
-    grid-column-gap: 400px;
+    /* display: grid;
+    grid-template-rows: auto; */
 }
   .container-inicio h1 {
         text-align: left;
+        margin-top: 20px;
     }
 
 .container-timeline {
-    /* margin-top: 90px; */
-    grid-row-start: 1;
-    grid-row-end: 1; 
-    grid-column-start: 1;
-    grid-column-end: 3;
-    height: auto;
-    width: 1864px
+    width: 1864px;
+    
+}
+.tarefas-preview {
+    width: 650px;
+    margin-right: 10px;
+    margin-left: 5px;
 }
 .lista-tarefas {
-    grid-row-start: 2;
-    grid-row-end: 3;
-    grid-column-start: 1;
-    grid-column-end: 1;
-    width: 1400px;
-    height: auto;
+    width: 500px;
+    margin-right: 10px;
 }
 .container-direita {
-    width: 100%;
-    height: auto;
-    grid-row-start: 2;
-    grid-row-end: 2;
-    grid-column-start: 2;
-    grid-column-end: 2;
+    width: 100px;
+    height: 100px;
+
+    border-style: solid;
+    border-width: 1;
 }
-
-
-@media only screen and (max-width: 2132px) {
-    /* For mobile phones: */
-    .container-inicio {
-        grid-column-gap: 100px;
-    }
-}
-
-@media only screen and (min-width: 2132px) {
-    /* For mobile phones: */
-    .container-direita {
-        grid-row-start: 1;
-        padding-top: 1px;
-        margin-top: 0px;
-        margin-left: 40px
-    }
-  
-    .container-timeline {
-        grid-column-end: 2;
-    }
-    .container-inicio {
-        grid-column-gap: 20px;
-    }
+.tarefas-calendario{
+    display: flex;
+    flex-direction: row;
 }
 
 #tarefas {
@@ -119,4 +93,36 @@
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: center;
+}
+
+.tarefa-box{
+    height: 95px;
+    border: #222121;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0.5rem;
+    margin: 5px;
+    padding: 5px;
+    font-style: black;
+    width: 500px;
+
+}
+.tarefa-box p{
+    margin-bottom: 5px;
+}
+
+.tarefa-box span{
+    font-size: 12px;
+}
+.tarefa-infos{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+.tarefa-box section{
+    flex-direction: column;
+}
+a{
+    color: black;
 }

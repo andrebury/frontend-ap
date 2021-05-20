@@ -275,7 +275,7 @@ function CadastroProjetos({match}) {
                     <section className="segundo">
                     <div className="pm">
                     <label>PM</label>
-                        <select onChange={HandlePm} value={pm.nome}>
+                        <select onChange={HandlePm} value={pm ? pm.nome : 'Escolha o PM'}>
                                 {pmsAPI.map((pm) => (
                                     <option key={pm._id} name={pm._id}  id={pm._id}>
                                         {" "}
@@ -286,7 +286,7 @@ function CadastroProjetos({match}) {
                         </div>
                         <div className="funcional">
                         <label>Funcional</label>
-                        <select onChange={(e) => handleFuncional(e)} value={funcional.nome}>
+                        <select onChange={(e) => handleFuncional(e)} value={funcional ?funcional.nome : 'Escolha o funcional'}>
                             {funcsAPI.map((func) => (
                                 <option key={func._id} name={func._id} id={func._id}>
                                     {" "}

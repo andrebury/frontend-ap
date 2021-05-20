@@ -2,22 +2,30 @@
     margin-top: 80px;
     padding-left: 30px;
 }
-.cadastro-container{
-    width: 1000px;
-    
+.cadastro-tarefas-container{
+    width: 600px;
+    max-width: 1120px;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 20px;
+        
+    display: flex;
+    align-items: center;
+    justify-content: center;    
 }
-.cadastro-container select {
+
+.cadastro-tarefas-container select {
     text-align: center;
 }
 
-.cadastro-container label {
+.cadastro-tarefas-container label {
     font-size: 25px;
     margin-right: 10px;
 
 }
 
 
-.cadastro-container .button {
+.cadastro-tarefas-container .button {
     cursor: pointer;
     width: 300px;
     height: 60px;
@@ -35,45 +43,46 @@
     transition: 0.2s;
 }
 
-.cadastro-container .button:hover {
+.cadastro-tarefas-container .button:hover {
     filter: brightness(90%);
 }
 
-.cadastro-container textarea {
+.cadastro-tarefas-container textarea {
     width: 100%;
 } 
 
-.cadastro-container section{
-    justify-content: space-between
+.cadastro-tarefas-container section{
+    display: flex;
+    margin-bottom: 20px;
 }
 
-.cadastro-container .primeiro input {
+.cadastro-tarefas-container .primeiro input {
     width: 500px;
     margin-right: 20px
 }
-.cadastro-container .primeiro select {
+.cadastro-tarefas-container .primeiro select {
     width: 200px;
     margin-left: 10px
 }
 
-.cadastro-container .segundo input {
+.cadastro-tarefas-container .segundo input {
     width: 200px;
 }
 
-.cadastro-container .segundo select {
+.cadastro-tarefas-container .segundo select {
     width: 200px;
     
 }
-.cadastro-container textarea {
+.cadastro-tarefas-container textarea {
     width: 100%;
 } 
 
-.cadastro-container .descricao {
+.cadastro-tarefas-container .descricao {
     margin-bottom: 20px;
     width: 100%
 }
 
-.cadastro-container .observacao {
+.cadastro-tarefas-container .observacao {
     margin-bottom: 20px;
     width: 100%
 
