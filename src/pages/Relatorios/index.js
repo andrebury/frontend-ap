@@ -224,13 +224,15 @@ function Tarefas({match}) {
 
     return (
         <>       
-
+            <div className='relatorios-lista'>
             <h1>
                 Relatório de Tarefas
             </h1>
-            <div className="cadastro-container">
+            <div className="lista-relatorios-container">
                 <section>
+            <section>
             <label>Status</label>
+
             <select value={statusselected} onChange={HandleStatusselected} className="status-filtro">
                 <option value="Todos" name="Todos">Todos</option>
                 <option value="Finalizado" name="Finalizados">Finalizados</option>
@@ -252,6 +254,7 @@ function Tarefas({match}) {
                 </option>
             ))}
             </select>
+            </section>
             </section>
             </div>
             <div>
@@ -356,7 +359,7 @@ function Tarefas({match}) {
                     </Button>
                 </Modal.Footer>
             </Modal>
-
+            </div>
        </>
     );
 }

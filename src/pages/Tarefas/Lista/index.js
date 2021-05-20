@@ -138,7 +138,7 @@ function Tarefas({match}) {
 
     return (
         <>       
-
+        <div className='tarefas-lista'>
             <h1>
                 Tarefas{" "}
                 <Link to={`/cadastro-tarefa/${idProjeto}`} >
@@ -214,7 +214,7 @@ function Tarefas({match}) {
                     </Button>
                 </Modal.Footer>
             </Modal>
-
+            </div>
        </>
     );
 }

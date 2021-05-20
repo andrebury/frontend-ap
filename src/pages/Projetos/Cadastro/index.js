@@ -66,7 +66,7 @@ function CadastroProjetos({match}) {
             pm: pmSelecionado,
             observacoes: observacoes,
         };
-
+        console.log(dataSave)
         api.post(match.params.projeto_id ? '/projeto/update': '/projeto/cadastro', dataSave, {
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem(
@@ -212,14 +212,6 @@ function CadastroProjetos({match}) {
         }
     }
 
-
-
-
-
-
-
-
-
     function HandleCliente(e) {       
         setCliente(e.target.value);
         setClienteSelecionado(e.target.selectedOptions[0].id);
@@ -236,22 +228,16 @@ function CadastroProjetos({match}) {
     }
 
 
-
-
-
-
-
-
-
     async function HandleTarefa(e) {
         history.push(`/tarefas/${idBusca}`);
     }
 
     return (
         <>
+        <div className='projetos-cadastro'>
                 <Titulo />
 
-            <div className="cadastro-container">
+            <div className="cadastro-projetos-container">
                 <form onSubmit={handleSave}>
                     <section className="primeiro">
                     <div className="titulo">
@@ -260,7 +246,7 @@ function CadastroProjetos({match}) {
                     </div>
                     <div className="cliente">
                     <label>Cliente</label>
-                    <select onChange={HandleCliente} value={cliente.nome}>
+                    <select required onChange={HandleCliente} value={cliente.nome}>
                         {clientes.map((cliente) => (
                             <option
                                 key={cliente._id}
@@ -289,7 +275,7 @@ function CadastroProjetos({match}) {
                     <section className="segundo">
                     <div className="pm">
                     <label>PM</label>
-                        <select required onChange={HandlePm} value={pm.nome}>
+                        <select onChange={HandlePm} value={pm.nome}>
                                 {pmsAPI.map((pm) => (
                                     <option key={pm._id} name={pm._id}  id={pm._id}>
                                         {" "}
@@ -300,7 +286,7 @@ function CadastroProjetos({match}) {
                         </div>
                         <div className="funcional">
                         <label>Funcional</label>
-                        <select required onChange={(e) => handleFuncional(e)} value={funcional.nome}>
+                        <select onChange={(e) => handleFuncional(e)} value={funcional.nome}>
                             {funcsAPI.map((func) => (
                                 <option key={func._id} name={func._id} id={func._id}>
                                     {" "}
@@ -344,6 +330,7 @@ function CadastroProjetos({match}) {
                         <button className="button" type="submit">Salvar</button>
                         <Tarefas/>
                 </form>
+            </div>
             </div>
         </>
     );

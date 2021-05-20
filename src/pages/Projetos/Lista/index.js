@@ -59,7 +59,7 @@ function ListaProjetos() {
 
     return (
         <>
-            
+            <div className='projetos-lista'>
             <h1>
                 Lista de Projetos{" "}
                 <Link to={'/cadastro-projeto'}>
@@ -112,6 +112,7 @@ function ListaProjetos() {
                 </tbody>
             </table>
 
+            </div>
             </div>
             </>
     );

@@ -1,26 +1,32 @@
-.cadastro-container{
-    width: 1000px
-
+.projetos-cadastro {
+    margin-top: 80px;
+    padding-left: 30px;
 }
 
-label {
+.cadastro-projetos-container {
+    width: 600px;
+    max-width: 1120px;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 20px;
+        
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cadastro-projetos-container label {
     font-size: 25px;
     margin-right: 10px;
+}
 
-}
-section {
-    margin-bottom: 20px;
-}
-button {
+.cadastro-projetos-container section {
+        display: flex;
+        margin-bottom: 20px;
+     }
+
+.cadastro-projetos-container .button {
     cursor: pointer;
-}
-
-button {
-    cursor: pointer;
-}
-
-
-.button {
     width: 300px;
     height: 60px;
     background: #4983ee;
@@ -37,51 +43,51 @@ button {
     transition: 0.2s;
 }
 
-.button:hover {
+.cadastro-projetos-container .button:hover {
     filter: brightness(90%);
 }
 
-.primeiro input {
+.cadastro-projetos-container .primeiro input {
     width: 500px;
     margin-right: 20px
 }
-.primeiro select {
+.cadastro-projetos-container .primeiro select {
     width: 200px;
     margin-left: 10px
 }
-.segundo {
+.cadastro-projetos-container .segundo {
     display: flex;
     justify-content: space-between
 }
-.segundo select{
+.cadastro-projetos-container .segundo select{
     width: 300px;
 }
-.terceiro {
+.cadastro-projetos-container .terceiro {
     justify-content: space-between
 }
-.terceiro input {
+.cadastro-projetos-container .terceiro input {
     width: 150px
 }
 
-.terceiro select{
+.cadastro-projetos-container .terceiro select{
     width: 150px
 }
-.quarto {
+.cadastro-projetos-container .quarto {
     justify-content: space-between
 }
-.quarto input {
+.cadastro-projetos-container .quarto input {
     width:200px
 }
 
-textarea {
+.cadastro-projetos-container textarea {
     width: 100%;
 } 
 
-.descricao {
+.cadastro-projetos-container .descricao {
     margin-bottom: 20px;
 }
 
-.observacoes {
+.cadastro-projetos-container .observacoes {
     margin-bottom: 20px;
 
 }

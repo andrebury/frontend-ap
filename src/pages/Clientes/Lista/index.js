@@ -32,6 +32,7 @@ function Clientes() {
 
     return (
         <>
+        <div className='clientes-list'>
             <h1>
                 Clientes{" "}
                 <Link onClick={handleEntrar}>
@@ -77,7 +78,7 @@ function Clientes() {
                 </tbody>
             </table> */}
             </div>
-            
+            </div>
         </>
     );
 }

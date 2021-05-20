@@ -1,3 +1,8 @@
+.relatorios-lista {
+    margin-top: 80px;
+    padding-left: 30px;
+}
+
 #lista-tarefas {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -48,18 +53,18 @@ button {
 }
 
 
-.cadastro-container select {
+.lista-relatorios-container select {
     width: 250px;
     text-align: center;
 }
-.cadastro-container section{
+.lista-relatorios-container section{
     margin-left: 10px;
     align-items: center;
 }
-.cadastro-container select{
+.lista-relatorios-container select{
     height: 30px;
 }
-.cadastro-container label{
+.lista-relatorios-container label{
     font-size: 15px;
 }
 

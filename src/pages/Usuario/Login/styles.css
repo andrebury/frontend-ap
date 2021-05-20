@@ -38,11 +38,11 @@
     opacity: 0.8;
 }
 
-button {
+.logon-container button {
     cursor: pointer;
 }
 
-form input {
+.logon-container form input {
     width: 100%;
     height: 60px;
     color: #333333;
@@ -51,7 +51,7 @@ form input {
     padding: 0 24px;
 }
 
-.button {
+.logon-container .button {
     width: 300px;
     height: 60px;
     background: #4983ee;
@@ -67,22 +67,22 @@ form input {
     transition: 0.2s;
 }
 
-.button:hover {
+.logon-container .button:hover {
     filter: brightness(90%);
 }
-.back-link {
+.logon-container .back-link {
     text-align: center;
 }
-.back-link form {
+.logon-container .back-link form {
     margin-top: 100px;
 }
 
-.back-link form h1 {
+.logon-container .back-link form h1 {
     font-size: 32px;
     margin-bottom: 32px;
 }
 
-.back-link form a {
+.logon-container .back-link form a {
     display: flex;
     align-items: center;
     margin-top: 40px;
@@ -93,10 +93,10 @@ form input {
     transition: opacity 0.2s;
     
 }
-.FiLogin {
+.logon-container .FiLogin {
     margin-left: 8px;
     margin-right: 4px;
 }
-.logon-container section.form form a:hover {
+.logon-container .logon-container section.form form a:hover {
     opacity: 0.8;
 }

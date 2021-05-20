@@ -94,26 +94,27 @@ function CadastroCliente() {
 
     return (
         <>
+        <div className='clientes-cadastro'>
             <Titulo />
+            <div className='formulario-clientes'>
+                <form onSubmit={handleSubmit}>
 
-            <form onSubmit={handleSubmit}>
+                <section  className='formulario-clientes-nome-ramo'>
+                
+                <input onChange={(e) => setNome(e.target.value)} placeholder="Digite o nome do Cliente" value={nome}></input>
+                
+                <input onChange={(e) => setRamo(e.target.value)} placeholder="Digite o Ramo" value={ramo}></input>
+                
+                </section>
+                <section className='formulario-clientes-solicitantes'>
 
-            <div className="primeiro">
-            <label>Nome</label>
-            <input onChange={(e) => setNome(e.target.value)} placeholder="Nome do Cliente" value={nome}></input>
+                <input onChange={(e) => setSolicitantes(e.target.value)} placeholder="Digite os solicitantes separados por vírgula" value={solicitantes}></input>
+
+                </section>        
+                <section><button className="button" type="submit">Salvar</button>        </section>
+                </form>
             </div>
-
-            <div className="segundo">
-            <label>Ramo</label>
-            <input onChange={(e) => setRamo(e.target.value)} placeholder="Ramo" value={ramo}></input>
-            
-            <label>Solicitante</label>
-            <input onChange={(e) => setSolicitantes(e.target.value)} placeholder="Solicitentes" value={solicitantes}></input>
-            
             </div>
-            
-            </form>
-            
         </>
     );
 }

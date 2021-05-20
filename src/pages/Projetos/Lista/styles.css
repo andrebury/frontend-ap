@@ -1,3 +1,9 @@
+.projetos-lista{
+    margin-top: 80px;
+    padding-left: 30px;
+}
+
+
 #projetos {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -24,25 +30,3 @@
     text-align: center;
 }
 
-button {
-    cursor: pointer;
-}
-
-.button {
-    background: #4983ee;
-    border: 0;
-    border-radius: 8px;
-    color: #fff;
-    font-size: 700;
-    margin-top: 16px;
-    display: inline-block;
-    text-align: center;
-    text-decoration: none;
-    font-size: 7;
-    line-height: 60px;
-    transition: 0.2s;
-}
-
-.button:hover {
-    filter: brightness(90%);
-}

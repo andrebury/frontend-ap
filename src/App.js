@@ -53,9 +53,9 @@ function App() {
                         Lista Projetos
                         </NavDropdown.Item>
                     </NavDropdown>
-                    <Nav.Link href="/arquivos">Arquivos</Nav.Link>
+                    {/* <Nav.Link href="/arquivos">Arquivos</Nav.Link> */}
                     <Nav.Link href="/clientes">Clientes</Nav.Link>
-                    <Nav.Link href="/relatorio">Relatorios</Nav.Link>
+                    <Nav.Link href="/relatorios">Relatorios</Nav.Link>
                     </Nav>
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end">

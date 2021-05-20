@@ -1,5 +1,9 @@
-
-.clientes-lista{
+.clientes-list{
+    margin-top: 80px;
+    padding-left: 30px; 
+}
+.clientes-lista{    
+   
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -15,16 +19,18 @@
     border-width: 1px;
     border-radius: 0.5rem;
     margin: 5px;
-    padding: 5px;
+    padding: 10px;
     font-style: black;
 
 }
 .cliente-unit p{
     margin-bottom: 5px;
+
 }
 
 .cliente-unit span{
     font-size: 12px;
+    margin-left: 5px;
 }
 .cliente-infos{
     display: flex;
@@ -34,7 +40,4 @@
 }
 .cliente-unit section{
     flex-direction: column;
-}
-a{
-    color: black;
 }

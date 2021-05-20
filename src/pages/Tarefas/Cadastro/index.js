@@ -177,6 +177,7 @@ function Tarefas({match}) {
 
     return (
         <>
+        <div classname='tarefas-cadastro'>
             <Titulo />
 
             <div className="cadastro-container">
@@ -267,6 +268,7 @@ function Tarefas({match}) {
   
             </form>
 
+            </div>
             </div>
         </>
     );

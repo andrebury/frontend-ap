@@ -1,27 +1,24 @@
+.tarefas-cadastro {
+    margin-top: 80px;
+    padding-left: 30px;
+}
 .cadastro-container{
     width: 1000px;
     
 }
-select {
+.cadastro-container select {
     text-align: center;
 }
 
-label {
+.cadastro-container label {
     font-size: 25px;
     margin-right: 10px;
 
 }
 
-button {
+
+.cadastro-container .button {
     cursor: pointer;
-}
-
-button {
-    cursor: pointer;
-}
-
-
-.button {
     width: 300px;
     height: 60px;
     background: #4983ee;
@@ -38,45 +35,45 @@ button {
     transition: 0.2s;
 }
 
-.button:hover {
+.cadastro-container .button:hover {
     filter: brightness(90%);
 }
 
-textarea {
+.cadastro-container textarea {
     width: 100%;
 } 
 
-section{
+.cadastro-container section{
     justify-content: space-between
 }
 
-.primeiro input {
+.cadastro-container .primeiro input {
     width: 500px;
     margin-right: 20px
 }
-.primeiro select {
+.cadastro-container .primeiro select {
     width: 200px;
     margin-left: 10px
 }
 
-.segundo input {
+.cadastro-container .segundo input {
     width: 200px;
 }
 
-.segundo select {
+.cadastro-container .segundo select {
     width: 200px;
     
 }
-textarea {
+.cadastro-container textarea {
     width: 100%;
 } 
 
-.descricao {
+.cadastro-container .descricao {
     margin-bottom: 20px;
     width: 100%
 }
 
-.observacao {
+.cadastro-container .observacao {
     margin-bottom: 20px;
     width: 100%
 
