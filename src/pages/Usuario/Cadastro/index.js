@@ -3,6 +3,7 @@ import { useHistory ,Link} from "react-router-dom";
 import api from "../../../services/api";
 import "./styles.css";
 import {MdKeyboardBackspace} from 'react-icons/md';
+import {NavbarSuperior} from '../../components/NavBar'
 
 function CadastroUsuario() {
     const history = useHistory();
@@ -61,6 +62,8 @@ function CadastroUsuario() {
 
     return (
         <>
+        <NavbarSuperior/>
+
         <div className='usuarios-cadastro'>
             <h1>Cadastro de usuário<Link to={`/home`}><MdKeyboardBackspace color="#4983ee"/></Link></h1>
             <div className="cadastro-usuario-container">               

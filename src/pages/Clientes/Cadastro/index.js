@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import api from "../../../services/api";
 import querystring from "query-string";
 import "./styles.css";
+import {NavbarSuperior} from '../../components/NavBar'
 
 function CadastroCliente() {
     const history = useHistory();
@@ -94,6 +95,7 @@ function CadastroCliente() {
 
     return (
         <>
+        <NavbarSuperior/>
         <div className='clientes-cadastro'>
             <Titulo />
             <div className='formulario-clientes'>

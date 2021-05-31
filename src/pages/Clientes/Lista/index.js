@@ -3,6 +3,8 @@ import api from "../../../services/api";
 import { useHistory, Link } from "react-router-dom";
 import "./styles.css";
 import { IoMdAdd } from "react-icons/io";
+import {NavbarSuperior} from '../../components/NavBar'
+
 function Clientes() {
     const history = useHistory();
 
@@ -32,6 +34,7 @@ function Clientes() {
 
     return (
         <>
+        <NavbarSuperior/>
         <div className='clientes-list'>
             <h1>
                 Clientes{" "}

@@ -4,6 +4,7 @@ import api from "../../../services/api";
 import ehAutenticado from "../../../services/auth";
 import { useHistory, Link } from "react-router-dom";
 import { FiLogIn } from "react-icons/fi";
+import {NavbarSuperior} from '../../components/NavBar'
 
 function Login() {
     const [email, setEmail] = useState([]);
@@ -37,6 +38,9 @@ function Login() {
         autenticado();
     }, []);
     return (
+        <>
+        <NavbarSuperior/>
+
         <div className="logon-container">
             <section className="form">
                 <form onSubmit={handleSubmit}>
@@ -66,6 +70,7 @@ function Login() {
                 </form>
             </section>
         </div>
+        </>
     );
 }
 

@@ -4,6 +4,7 @@ import "./styles.css";
 import api from "../../../services/api";
 import { IoMdAdd } from "react-icons/io";
 import {orderBy} from 'lodash';
+import {NavbarSuperior} from '../../components/NavBar'
 
 function ListaProjetos() {
 
@@ -59,6 +60,8 @@ function ListaProjetos() {
 
     return (
         <>
+        <NavbarSuperior/>
+
             <div className='projetos-lista'>
             <h1>
                 Lista de Projetos{" "}

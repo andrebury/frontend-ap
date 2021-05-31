@@ -5,6 +5,7 @@ import {MdKeyboardBackspace} from 'react-icons/md';
 import './styles.css'
 
 import api from "../../../services/api";
+import {NavbarSuperior} from '../../components/NavBar'
 
 function Tarefas({match}) {
     const history = useHistory();
@@ -177,6 +178,8 @@ function Tarefas({match}) {
 
     return (
         <>
+        <NavbarSuperior/>
+
         <div classname='tarefas-cadastro'>
             <Titulo />
 

@@ -5,6 +5,7 @@ import { useHistory, Link } from "react-router-dom";
 import './styles.css'
 import {orderBy} from 'lodash';
 import api from "../../services/api";
+import {NavbarSuperior} from '../components/NavBar'
 
 function Tarefas({match}) {
     const history = useHistory();
@@ -223,7 +224,9 @@ function Tarefas({match}) {
      
 
     return (
-        <>       
+        <>  
+        <NavbarSuperior/>
+     
             <div className='relatorios-lista'>
             <h1>
                 Relatório de Tarefas

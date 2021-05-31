@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import './styles.css'
 import api from "../../../services/api";
+import {NavbarSuperior} from '../../components/NavBar'
 
 function CadastroProjetos({match}) {
     const history = useHistory();
@@ -234,6 +235,8 @@ function CadastroProjetos({match}) {
 
     return (
         <>
+        <NavbarSuperior/>
+
         <div className='projetos-cadastro'>
                 <Titulo />
 

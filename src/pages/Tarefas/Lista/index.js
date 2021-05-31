@@ -5,6 +5,7 @@ import { IoMdAdd } from "react-icons/io";
 import './styles.css'
 import {orderBy} from 'lodash';
 import api from "../../../services/api";
+import {NavbarSuperior} from '../../components/NavBar'
 
 function Tarefas({match}) {
     const history = useHistory();
@@ -138,6 +139,8 @@ function Tarefas({match}) {
 
     return (
         <>       
+        <NavbarSuperior/>
+
         <div className='tarefas-lista'>
             <h1>
                 Tarefas{" "}
