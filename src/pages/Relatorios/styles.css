@@ -57,16 +57,16 @@ button {
     width: 250px;
     text-align: center;
 }
-.lista-relatorios-container section{
-    margin-left: 10px;
-    align-items: center;
-}
 .lista-relatorios-container select{
     height: 30px;
 }
 .lista-relatorios-container label{
     font-size: 15px;
+    margin-right: 5px;
+    margin-left: 5px;
 }
+
+
 
 .projetos-lista{
     display: flex;
@@ -86,6 +86,7 @@ button {
     margin: 5px;
     padding: 5px;
     font-style: black;
+    width: 600px;
 
 }
 .tarefa-unit p{
@@ -94,6 +95,8 @@ button {
 
 .tarefa-unit span{
     font-size: 12px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 .tarefa-infos{
     display: flex;

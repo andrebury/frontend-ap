@@ -70,7 +70,7 @@ function Inicio() {
                 diaSemana: diasAtras.getDay(),
             })
         }
-
+        
         return (
             <>
                 <table id="timeline">
@@ -131,7 +131,11 @@ function Inicio() {
                                             name="tarefa"
                                             onClick={ativaPreview}
                                         >
-                                            {tarefa.titulo}
+                                            {tarefa.titulo.length > 50 ? tarefa.titulo.substring(
+                                                  0,
+                                                  48
+                                              ) + '...'
+                                            : tarefa.titulo}
                                         </Link>
                                 </td>
                                 <td>
@@ -295,7 +299,7 @@ function Inicio() {
 
             //setar no state
             setSolicitadas(solicitadas.data.tarefas)
-            setTarefas(pendencias.data.tarefas)
+            setTarefas(pendencias.data.tarefas)            
         }
         carrageTarefas()
     }, [])
@@ -352,7 +356,11 @@ function Inicio() {
                                             name="tarefa"
                                             onClick={ativaPreview}
                                         >
-                                            {tarefa.titulo}
+                                            {tarefa.titulo.length > 50 ? tarefa.titulo.substring(
+                                                  0,
+                                                  48
+                                              ) + '...'
+                                            : tarefa.titulo}
                                         </Link>
                                     </h5>
                                 </div>
@@ -395,7 +403,11 @@ function Inicio() {
                                             name="tarefa"
                                             onClick={ativaPreview}
                                         >
-                                            {tarefa.titulo}
+                                            {tarefa.titulo.length > 50 ? tarefa.titulo.substring(
+                                                  0,
+                                                  48
+                                              ) + '...'
+                                            : tarefa.titulo}
                                         </Link>
                                     </h5>
                                 </div>

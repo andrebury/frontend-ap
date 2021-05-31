@@ -229,8 +229,6 @@ function Tarefas({match}) {
                 Relatório de Tarefas
             </h1>
             <div className="lista-relatorios-container">
-                <section>
-            <section>
             <label>Status</label>
 
             <select value={statusselected} onChange={HandleStatusselected} className="status-filtro">
@@ -241,7 +239,6 @@ function Tarefas({match}) {
                 <option value="Desenho" name="Desenho">Desenho</option>
                 <option value="Homologando" name="Homologando">Homologando</option>
             </select>
-
             <label>Responsável</label>
             <select required onChange={handleResponsavel} value={responsavel.nome} className="responsavel-filtro">
                 <option key='Todos' name="Todos" id="Todos">
@@ -253,8 +250,6 @@ function Tarefas({match}) {
                 </option>
             ))}
             </select>
-            </section>
-            </section>
             </div>
             <div>
             {/* <table id="lista-tarefas">
@@ -305,7 +300,11 @@ function Tarefas({match}) {
                                 <h5><Link
                                             to={`/tarefa/${tarefa.projeto._id}/${tarefa._id}`}
                                         >
-                                            {tarefa.titulo}
+                                            {tarefa.titulo.length > 50 ? tarefa.titulo.substring(
+                                                  0,
+                                                  48
+                                              ) + '...'
+                                            : tarefa.titulo}
                                         </Link></h5>
                                 <span><Link
                                             id="res"
@@ -323,11 +322,12 @@ function Tarefas({match}) {
                             <section>
                                 {/* <span><b>Descrição: </b>{tarefa.descricao === undefined ? '' : tarefa.descricao.length > 120 ? tarefa.descricao.substring(0,118) + '...' :tarefa.descricao} </span>       */}
                                                      
-                                <span><b>Prazo:</b> {tarefa.prazo}</span>
+                                <div><span><b>Prazo:</b> {tarefa.prazo}</span>
                                 <span><b>Status:</b> {tarefa.status}</span>
-                                <span><b>Solicitante: </b>{tarefa.solicitante !== undefined ? tarefa.solicitante.nome : ''}</span>
+                                </div>
+                                <div><span><b>Solicitante: </b>{tarefa.solicitante !== undefined ? tarefa.solicitante.nome : ''}</span>
                                 <span><b>Responsável: </b>{tarefa.desenvolvedor !== undefined ? tarefa.desenvolvedor.nome : ''}</span>
-
+                                </div>
                             </section>
                     </div>
                  ))}
