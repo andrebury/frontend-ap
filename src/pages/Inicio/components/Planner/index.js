@@ -31,7 +31,7 @@ function Planner (props){
         if(props.tarefas){
             props.tarefas.map((tarefa) => {
                 tarefa.corTimeline = coresArray[pos]
-                // console.log(tarefa.corTimeline)
+
                 pos = pos === coresArray.length - 1 ? 0 : pos + 1
             })
         }
@@ -163,7 +163,7 @@ function Planner (props){
                                     </Link>
                                 </td>
                                 {datasArray.map((dia) => {
-                                    // console.log('tarefa: ' + tarefa.titulo + ', dia: ' + dia.diaSemana)
+
 
                                     if (
                                         dia.diaSemana === 6 ||

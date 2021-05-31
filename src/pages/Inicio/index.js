@@ -4,9 +4,8 @@ import './styles.css'
 import api from '../../services/api'
 import Preview from './components/Preview'
 import Planner from './components/Planner'
-
 import { orderBy } from 'lodash'
-
+import {NavbarSuperior} from '../components/NavBar'
 //import pt from 'date-fns/locales/pt';
 
 function Inicio() {
@@ -129,8 +128,10 @@ function Inicio() {
         let id = e.target.id
 
         if (e.target) {
-            if (e.target.name === 'projeto') {
-                console.log('projetos')
+            if (e.target.name === 'projeto') {       
+                
+
+
                 let projetosP = await api.get(`/projeto/id/${id}`, {
                     headers: {
                         Authorization: `Bearer ${sessionStorage.getItem(
@@ -140,6 +141,8 @@ function Inicio() {
                 })
 
                 setInfoPreview({ dados: projetosP.data, tipo: name })
+
+
             } else if (e.target.name === 'tarefa') {
                 let tarefasP = await api.get(`/tarefa/id/${id}`, {
                     headers: {
@@ -148,8 +151,12 @@ function Inicio() {
                         )}`,
                     },
                 })
+                
 
                 setInfoPreview({ dados: tarefasP.data, tipo: name })
+
+
+
             } else {
                 setInfoPreview({ dados: {}, tipo: 'default' })
             }
@@ -158,6 +165,7 @@ function Inicio() {
 
     return (
         <>
+        <NavbarSuperior/>
             <div className="container-inicio">
                 <div className="container-timeline">
                     <h2>Planner - Tarefas</h2>
